@@ -8,7 +8,7 @@ async function logic(payload: BasePayload) {
         secondary: data.title?.native ?? data.title?.romaji ?? data.title?.english ?? "",
     };
 
-    const description = data.description;
+    const description = new DOMParser().parseFromString(data.description, "text/html").textContent ?? "";
     const poster = data.coverImage;
 
     const status = data.status;

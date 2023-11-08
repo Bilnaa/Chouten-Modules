@@ -11,7 +11,7 @@
     "copy-files": "copyfiles -u 1 src/**/*.json dist/ && copyfiles -u 1 src/**/*.png dist/",
     "build": "npm run clean && npm run lint && npm run build:ts",
     "rebuild": "npm run clean && npm run build:ts",
-    "build:ts": "tsc --project tsconfig.json && npm run copy-files",
+    "build:ts": "tsc && npm run copy-files",
     "clean": "rimraf dist/",
     "prettier": "prettier --write .",
     "eslint": "eslint --ext .ts src/** --fix",
@@ -34,6 +34,7 @@
     "copyfiles": "^2.4.1",
     "prettier": "2.8.8",
     "rimraf": "^5.0.1",
+    "ts-node": "^10.9.1",
     "tslib": "^2.5.3",
     "typescript": "^4.9.5"
   },

@@ -32,7 +32,7 @@ type BaseResult =
     };
 
 let reqId = 0;
-let resolveFunctions: { [key: string]: Function } = {};
+const resolveFunctions: { [key: string]: Function } = {};
 
 // window.onmessage = async function (event: MessageEvent) {
 //     const data = JSON.parse(event.data);
@@ -71,7 +71,6 @@ function sendRequest(
 
     resolveFunctions[currentReqId] = resolve;
 
-    // @ts-ignore
     Native.sendHTTPRequest(
       JSON.stringify({
         reqId: currentReqId,
@@ -88,7 +87,6 @@ function sendRequest(
 function sendResult(result: BaseResult, last = false) {
   const currentReqId = (++reqId).toString();
 
-  // @ts-ignore
   Native.sendHTTPRequest(
     JSON.stringify({
       reqId: currentReqId,
@@ -99,10 +97,9 @@ function sendResult(result: BaseResult, last = false) {
   );
 }
 
-function sendSignal(signal: number, message: string = "") {
+function sendSignal(signal: number, message = "") {
   const currentReqId = (++reqId).toString();
 
-  // @ts-ignore
   Native.sendHTTPRequest(
     JSON.stringify({
       reqId: currentReqId,

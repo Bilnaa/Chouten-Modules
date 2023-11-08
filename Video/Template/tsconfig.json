@@ -1,5 +1,4 @@
 {
-  "exclude": ["./test"],
   "compilerOptions": {
     "target": "ES2017",
     "lib": [
@@ -19,7 +18,13 @@
     "strict": true,
     "jsx": "preserve",
     "incremental": true,
-    "declaration": false,
     "skipLibCheck": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "./test"],
+  "ts-node": {
+      "compilerOptions": {
+          "module": "commonjs"
+      }
   }
 }
