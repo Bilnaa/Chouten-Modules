@@ -18,30 +18,6 @@ async function getVRF(query: string, action: string): Promise<string> {
     }
 }
 
-async function reconstructM3u8File(file: string, isViz: boolean): Promise<string>{
-    const m3u8FileArray = (await sendRequest(
-        file,
-        {
-            "referer": isViz ? "https://vidstream.pro/" : "https://mcloud.to/",
-            "x-requested-with": "XMLHttpRequest"
-        }
-    )).split("\n");
-    
-    let shouldReplace = false;
-
-    for(let i = 0; i < m3u8FileArray.length; i++){
-        
-        if(m3u8FileArray[i].startsWith("#EXTINF")){
-            shouldReplace = true;
-        }else if(shouldReplace){
-            m3u8FileArray[i] =  (new URL(m3u8FileArray[i], file)).toString()
-            shouldReplace = false;
-        }
-    }
-
-    return `data:application/x-mpegURL;base64,${btoa(m3u8FileArray.join("\n"))}`;
-}
-
 async function getVidstreamLink(query: string, isViz = true): Promise<MediaQuality[]> {
     const nineAnimeURL = "9anime.eltik.net";
     const apiKey = "enimax";
@@ -67,8 +43,6 @@ async function getVidstreamLink(query: string, isViz = true): Promise<MediaQuali
         }
     );
 
-    console.log(source);
-
     try {
         const parsedJSON = JSON.parse(source);
         const manifestUrl = parsedJSON?.result?.sources[0]?.file;
@@ -76,8 +50,8 @@ async function getVidstreamLink(query: string, isViz = true): Promise<MediaQuali
             const manifestFile = await sendRequest(parsedJSON.result.sources[0].file, { referer: "https://vidstream.pro/" });
             const resolutions = manifestFile.split("\\n\\n")[0].match(/(RESOLUTION=)(.*)(\s*?)(\s*.*)/g)!;
             const qualities: MediaQuality[] = [];
-            
-            for(const res of resolutions){
+
+            for (const res of resolutions) {
                 const quality = res.split('\n')[0].split('x')[1].split(',')[0];
                 const reconstructedFile = await reconstructM3u8File((new URL(res.split('\n')[1], manifestUrl)).toString(), isViz);
                 console.log(reconstructedFile);
@@ -97,48 +71,33 @@ async function getVidstreamLink(query: string, isViz = true): Promise<MediaQuali
     }
 }
 
-// getFilemoonLink: async function (filemoonHTML: string) {
+async function getFilemoonLink(filemoonHTML: string) {
+    const nineAnimeURL = "9anime.eltik.net";
+    const apiKey = "enimax";
+    const reqURL = `https://${nineAnimeURL}/filemoon?apikey=${apiKey}`;
 
-//     let fallbackAPI = false;
-//     let nineAnimeURL = "9anime.eltik.net";
-//     let apiKey = "enimax";
+    const source = await sendRequest(
+        reqURL,
+        {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "POST",
+        new URLSearchParams({
+            "query": filemoonHTML
+        }).toString()
+    );
 
-//     try {
-//         this.checkConfig();
-//         nineAnimeURL = localStorage.getItem("9anime").trim();
-//         apiKey = localStorage.getItem("apikey").trim();
-//         fallbackAPI = false;
-//     } catch (err) {
-//         console.warn("Defaulting to Consumet.");
-//     }
-
-//     let reqURL = `https://${nineAnimeURL}/filemoon?apikey=${apiKey}`;
-
-//     if (fallbackAPI) {
-//         throw new Error("Not supported");
-//     }
-
-//     const source = await MakeFetch(reqURL, {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/x-www-form-urlencoded"
-//         },
-//         body: new URLSearchParams({
-//             "query": filemoonHTML
-//         })
-//     });
-
-//     try {
-//         const parsedJSON = JSON.parse(source);
-//         if (parsedJSON.url) {
-//             return parsedJSON.url;
-//         } else {
-//             throw new Error("FILEMOON1: Received an empty URL or the URL was not found.");
-//         }
-//     } catch (err) {
-//         throw new Error("FILEMOON0: Could not parse the JSON correctly.");
-//     }
-// },
+    try {
+        const parsedJSON = JSON.parse(source);
+        if (parsedJSON.url) {
+            return parsedJSON.url;
+        } else {
+            throw new Error("FILEMOON1: Received an empty URL or the URL was not found.");
+        }
+    } catch (err) {
+        throw new Error("FILEMOON0: Could not parse the JSON correctly.");
+    }
+}
 
 async function decryptSource(query: string): Promise<string> {
     const nineAnimeURL = "9anime.eltik.net";
@@ -176,7 +135,8 @@ async function logic(payload: BasePayload) {
         list: []
     });
 
-    const supportedServers = ["vidstream", "mycloud"];
+    // const supportedServers = ["vidstream", "mycloud"];
+    const supportedServers = ["filemoon"];
 
     for (let i = 0; i < allServers.length; i++) {
         let currentServer = allServers[i];
@@ -192,10 +152,9 @@ async function logic(payload: BasePayload) {
         }
 
         const serverName = currentServer.innerText.toLowerCase();
-
         if (supportedServers.includes(serverName)) {
             servers[0].list.push({
-                url: currentServer.getAttribute("data-link-id") ?? "",
+                url: JSON.stringify([currentServer.getAttribute("data-link-id"), serverName]),
                 name: `${serverName}-${type}`
             });
         }
@@ -220,21 +179,21 @@ async function addSource(query: string, index: string, extractor = "vidstream") 
         const vidstreamID = sourceDecrypted.split("/").pop()!;
         source.push(...await getVidstreamLink(vidstreamID, true));
     } else if (extractor == "filemoon") {
-        // const filemoonHTML = await MakeFetch(sourceDecrypted);
-        // const m3u8File = await self.getFilemoonLink(filemoonHTML);
+        const filemoonHTML = await sendRequest(sourceDecrypted, {});
+        const m3u8File = await self.getFilemoonLink(filemoonHTML);
 
-        // source = {
-        //     "name": "Filemoon#" + index,
-        //     "type": m3u8File.includes(".m3u8") ? "hls" : "mp4",
-        //     "url": m3u8File,
-        // };
+        source = [{
+            quality: "Filemoon#" + index,
+            type: m3u8File.includes(".m3u8") ? "hls" : "mp4",
+            file: m3u8File,
+        }];
 
     } else {
         const mCloudID = sourceDecrypted.split("/").pop()!;
         source.push(...await self.getVidstreamLink(mCloudID, false));
     }
 
-    return source;
+
     // if ("skip_data" in serverData) {
     //     serverData.skip_data = JSON.parse(await self.decryptSource(serverData.skip_data));
     //     source.skipIntro = {
@@ -243,11 +202,16 @@ async function addSource(query: string, index: string, extractor = "vidstream") 
     //     };
     // }
 
+    return source;
+    
+
 }
 
 async function getSource(payload: BasePayload) {
-    const serverID = payload.query;
-    const sources = await addSource(serverID, "");
+    const serverInfo = JSON.parse(payload.query);
+    const serverID = serverInfo[0];
+    const serverName = serverInfo[1];
+    const sources = await addSource(serverID, "", serverName);
 
     sendResult({
         result: {
