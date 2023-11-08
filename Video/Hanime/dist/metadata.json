@@ -1,18 +1,17 @@
 {
-    "id": "77cb7ccc-335a-11ee-be56-0242ac120002",
-    "type": "Video",
-    "moduleType": "source",
+    "id": "51327340-342c-11ee-be56-0242ac120002",
+    "type": "source",
     "subtypes": ["anime"],
-    "name": "Gogoanime",
+    "name": "Hanime",
     "version": "0.0.1",
     "formatVersion": 1,
     "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
     "general": {
-      "author": "Enimax",
+      "author": "Femalemonkeyman",
       "description": "A module to get the data from gogoanime",
       "lang": ["en-US"],
       "baseURL": "https://mymodule.com",
-      "bgColor":  "#2e2e2e",
+      "bgColor":  "#000000",
       "fgColor": "#ffffff"
     }
 }
