@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 function generateEncryptedAjaxParams(scriptValue, id, keys) {
     const encryptedKey = CryptoJS.AES.encrypt(id, keys[0], {
         iv: keys[2],
@@ -106,6 +107,7 @@ async function getSource(payload) {
             sources: qualities,
             subtitles: [],
             skips: [],
+            headers: {},
         },
         action: "video",
     });

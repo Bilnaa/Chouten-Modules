@@ -1,3 +1,5 @@
+export {};
+
 async function logic(payload: BasePayload) {
 
     const trending = JSON.parse(await sendRequest(

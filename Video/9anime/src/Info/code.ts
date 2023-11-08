@@ -1,3 +1,5 @@
+export {};
+
 async function getVRF(query: string, action: string): Promise<string> {
     const nineAnimeURL = "9anime.eltik.net";
     const reqURL = `https://${nineAnimeURL}/${action}?query=${encodeURIComponent(query)}&apikey=${"enimax"}`;
@@ -45,6 +47,7 @@ async function logic(payload: BasePayload) {
             mediaType: "Episodes",
             seasons: seasons,
             mediaList: [],
+            banner: null,
         },
         action: "metadata",
     });

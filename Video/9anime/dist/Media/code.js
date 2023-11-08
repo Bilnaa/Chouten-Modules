@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const baseURL = "https://aniwave.to";
 async function getVRF(query, action) {
     const nineAnimeURL = "9anime.eltik.net";

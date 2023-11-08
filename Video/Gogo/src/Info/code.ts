@@ -1,3 +1,5 @@
+export {};
+
 async function logic(payload: BasePayload) {
     const html = await sendRequest(payload.query, {});
     const document = new DOMParser().parseFromString(html, "text/html");
@@ -39,6 +41,7 @@ async function logic(payload: BasePayload) {
             mediaType: "Episodes",
             seasons: seasons,
             mediaList: [],
+            banner: null,
         },
         action: "metadata",
     });
@@ -48,7 +51,7 @@ async function getEpList(payload: any) {
     const baseURL = "https://gogoanime.hu";
     const html = await sendRequest(payload.query, {});
     const document = new DOMParser().parseFromString(html, "text/html");
-    const allEpInfo = [];
+    const allEpInfo: { url: string; number: number; title: string }[] = [];
     const li = document.querySelectorAll("#episode_related > li");
 
     for (let i = 0; i < li.length; i++) {

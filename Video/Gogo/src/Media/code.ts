@@ -1,3 +1,5 @@
+export {};
+
 function generateEncryptedAjaxParams(scriptValue: string, id: string, keys: Array<string>) {
     const encryptedKey = CryptoJS.AES.encrypt(id, keys[0], {
         iv: keys[2] as any,
@@ -107,7 +109,7 @@ async function getSource(payload: BasePayload) {
     const manifestUrl = payload.query;
     const resResult = await sendRequest(manifestUrl, {});
 
-    let qualities = [];
+    let qualities: { quality: string; file: string; type: string }[] = [];
 
     qualities.push({ quality: "auto", file: manifestUrl, type: "hls" });
 
@@ -137,6 +139,7 @@ async function getSource(payload: BasePayload) {
             sources: qualities,
             subtitles: [],
             skips: [],
+            headers: {},
         },
         action: "video",
     });

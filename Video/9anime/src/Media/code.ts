@@ -1,3 +1,5 @@
+export {};
+
 const baseURL = "https://aniwave.to";
 
 async function getVRF(query: string, action: string): Promise<string> {
@@ -163,7 +165,7 @@ async function addSource(query: string, index: string, extractor = "vidstream") 
         source.push(...(await getVidstreamLink(vidstreamID, true)));
     } else if (extractor == "filemoon") {
         const filemoonHTML = await sendRequest(sourceDecrypted, {});
-        const m3u8File = await self.getFilemoonLink(filemoonHTML);
+        const m3u8File = await (self as any).getFilemoonLink(filemoonHTML);
 
         source = [
             {
@@ -174,7 +176,7 @@ async function addSource(query: string, index: string, extractor = "vidstream") 
         ];
     } else {
         const mCloudID = sourceDecrypted.split("/").pop()!;
-        source.push(...(await self.getVidstreamLink(mCloudID, false)));
+        source.push(...(await (self as any).getVidstreamLink(mCloudID, false)));
     }
 
     // if ("skip_data" in serverData) {

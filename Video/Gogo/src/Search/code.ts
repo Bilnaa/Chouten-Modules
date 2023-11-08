@@ -1,3 +1,5 @@
+export {};
+
 async function logic(payload: BasePayload) {
     const baseURL = "https://gogoanime.hu";
     const searchHTML = await sendRequest(`${baseURL}/search.html?keyword=${encodeURIComponent(payload.query)}`, {});

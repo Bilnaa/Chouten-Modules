@@ -1,3 +1,5 @@
+export {};
+
 async function logic(payload: BasePayload) {
     const infoJSON = JSON.parse(await sendRequest(
         `https://hanime.tv/api/v8/video?id=${payload.query.split("/").pop()}`, {}

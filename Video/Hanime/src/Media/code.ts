@@ -1,3 +1,5 @@
+export {};
+
 async function logic(payload: BasePayload) {
     const servers: MediaDataResult[] = [];
 
@@ -26,7 +28,7 @@ async function getSource(payload: BasePayload) {
 
     const qualities: MediaQuality[] = [];
 
-    sourceJSON.videos_manifest.servers[0].streams.map((elem) => {
+    sourceJSON.videos_manifest.servers[0].streams.map((elem: any) => {
         if(!elem.url){
             return;
         }

@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 async function logic(payload) {
     var _a, _b, _c, _d, _e, _f;
     const baseURL = "https://gogoanime.hu";

@@ -1,3 +1,5 @@
+export {};
+
 async function logic(payload: BasePayload) {
 
     // const html = await fetch(`https://aniwatch.to/search?keyword=${encodeURIComponent(payload.query)}`, {});

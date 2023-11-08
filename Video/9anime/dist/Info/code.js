@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 async function getVRF(query, action) {
     const nineAnimeURL = "9anime.eltik.net";
     const reqURL = `https://${nineAnimeURL}/${action}?query=${encodeURIComponent(query)}&apikey=${"enimax"}`;
@@ -43,6 +44,7 @@ async function logic(payload) {
             mediaType: "Episodes",
             seasons: seasons,
             mediaList: [],
+            banner: null,
         },
         action: "metadata",
     });

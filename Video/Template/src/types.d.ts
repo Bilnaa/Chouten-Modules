@@ -169,7 +169,7 @@ interface InfoData {
     primary: string;
     secondary: string | undefined;
   };
-  banner: string;
+  banner: string | null;
   altTitles: string[];
   epListURLs: NonEmptyArray<string>;
   description: string | undefined;

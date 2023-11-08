@@ -1,3 +1,5 @@
+export {};
+
 async function logic(payload: BasePayload) {
     const baseURL = "https://aniwave.to";
     const searchHTML = await sendRequest(`${baseURL}/filter?keyword=${encodeURIComponent(payload.query)}`, {});

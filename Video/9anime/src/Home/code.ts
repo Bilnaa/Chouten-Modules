@@ -1,3 +1,5 @@
+export {};
+
 async function logic(payload: BasePayload) {
     const baseURL = "https://gogoanime.hu";
 
@@ -24,12 +26,12 @@ async function logic(payload: BasePayload) {
         };
     });
 
-    const spotlight_data = [];
+    const spotlight_data: HompageData[] = [];
 
     try {
-        spotlight_data.push(items.pop());
-        spotlight_data.push(items.pop());
-        spotlight_data.push(items.pop());
+        spotlight_data.push(items.pop()!);
+        spotlight_data.push(items.pop()!);
+        spotlight_data.push(items.pop()!);
 
         for (const data of spotlight_data) {
             data!.indicator = "Spotlight";

@@ -1,18 +1,18 @@
 {
-    "id": "28d8c6c4-335a-11ee-be56-0242ac120002",
+    "id": "ec4f774a-372b-11ee-be56-0242ac120002",
     "type": "Video",
     "moduleType": "source",
     "subtypes": ["anime"],
-    "name": "Aniwatch",
-    "version": "0.3.2",
+    "name": "9anime",
+    "version": "0.0.1",
     "formatVersion": 1,
     "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
     "general": {
       "author": "Enimax",
-      "description": "A module to get the data from aniwatch.to",
+      "description": "A module to get the data from 9anime",
       "lang": ["en-US"],
       "baseURL": "https://mymodule.com",
-      "bgColor":  "#ffcb3d",
-      "fgColor": "#000000"
+      "bgColor":  "#6b0098",
+      "fgColor": "#ffffff"
     }
 }
