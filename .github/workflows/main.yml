@@ -61,6 +61,7 @@ jobs:
 
     - run: |
           cp /home/runner/*.module ./
+          mkdir images
           cp /home/runner/images/* ./images/
           ls -a
           git config user.name github-actions
