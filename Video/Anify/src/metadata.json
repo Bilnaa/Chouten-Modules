@@ -5,7 +5,7 @@
   "subtypes": ["anime"],
   "name": "Anify",
   "version": "1.0.0",
-  "formatVersion": 1,
+  "formatVersion": 2,
   "updateUrl": "https://github.com/enimax-anime/chouten-modules/raw/built/Anify.module",
   "general": {
     "author": "Eltik",

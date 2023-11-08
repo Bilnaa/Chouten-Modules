@@ -5,7 +5,7 @@
     "subtypes": ["anime"],
     "name": "Aniwatch",
     "version": "0.3.2",
-    "formatVersion": 1,
+    "formatVersion": 2,
     "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
     "general": {
       "author": "Enimax",
