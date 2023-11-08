@@ -29,7 +29,7 @@ jobs:
     - name: Building the module
       run: |
         cd $REPO_NAME && make build-module && cd ..
-        cp $REPO_NAME/*.module ./built/
+        cp $REPO_NAME/*.module ./aniwatch-chouten/aniwatch-chouten
         cd $REPO_NAME && ls && cd ..
         cd built && ls && cd ..
       env: 
@@ -46,4 +46,4 @@ jobs:
           ls -a
           git config user.name github-actions
           git config user.email github-actions@github.com
-          cd built && git add . && git commit -m "test" && git push
+          git add . && git commit -m "test" && git push
