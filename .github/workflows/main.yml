@@ -99,6 +99,16 @@ jobs:
         ref: "built"
 
     - run: |
+          rm -f *.module
+          if [ -d "Video" ]; then
+            rm -rf Video
+          fi
+          if [ -d "Book" ]; then
+            rm -rf Book
+          fi
+          if [ -d "Text" ]; then
+            rm -rf Text
+          fi
           cp /home/runner/*.module ./
           mkdir -p images
           cp /home/runner/images/* ./images/
