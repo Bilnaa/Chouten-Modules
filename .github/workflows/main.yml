@@ -30,22 +30,8 @@ jobs:
     - name: Building the module
       run: |
         cd $REPO_NAME
-        for folder in Video; do
-          cd Video/"$folder"
-          make build-module
-          cp ./*.module /home/runner
-          cp ./src/icon.png /home/runner/images/"$folder".png
-          cd ..
-        done
-        for folder in Book; do
-          cd Book/"$folder"
-          make build-module
-          cp ./*.module /home/runner
-          cp ./src/icon.png /home/runner/images/"$folder".png
-          cd ..
-        done
-        for folder in Text; do
-          cd Text/"$folder"
+        for folder in Video Book Text; do
+          cd "$folder"
           make build-module
           cp ./*.module /home/runner
           cp ./src/icon.png /home/runner/images/"$folder".png
