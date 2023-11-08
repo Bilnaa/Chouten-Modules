@@ -29,7 +29,8 @@ jobs:
       run: |
         cd $REPO_NAME && make build-module && cd ..
         cp $REPO_NAME/*.module ./built/
-        cd ./built/ && git add . && git commit -m "Updated module" && git push
+        cd ./built/ && git config user.name "$REPO_OWNER" && git config user.password "$TOKEN" && git add . && git commit -m "Updated module" && git push
       env: 
         REPO_NAME: ${{github.event.repository.name}}
-
+        REPO_OWNER: ${{github.repository_owner}}
+        TOKEN: ${{secrets.GITHUB_TOKEN}}
