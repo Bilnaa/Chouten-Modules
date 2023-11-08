@@ -3,7 +3,7 @@
     "type": "source",
     "subtypes": ["anime"],
     "name": "Aniwatch.to",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "formatVersion": 1,
     "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
     "general": {
