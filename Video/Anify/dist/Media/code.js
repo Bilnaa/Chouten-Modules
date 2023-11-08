@@ -22,31 +22,31 @@ async function getSource(payload) {
             url: subtitle.url,
             language: subtitle.lang,
         });
-    }),
-        sendResult({
-            result: {
-                skips: [
-                    {
-                        start: data.intro.start,
-                        end: data.intro.end,
-                        type: "Opening",
-                    },
-                    {
-                        start: data.outro.start,
-                        end: data.outro.end,
-                        type: "Ending",
-                    },
-                ],
-                sources: data.sources.map((source) => {
-                    return {
-                        file: source.url,
-                        type: "hls",
-                        quality: source.quality,
-                    };
-                }),
-                subtitles: subtitles,
-                headers: data.headers,
-            },
-            action: "video",
-        }, true);
+    });
+    sendResult({
+        result: {
+            skips: [
+                {
+                    start: data.intro.start,
+                    end: data.intro.end,
+                    type: "Opening",
+                },
+                {
+                    start: data.outro.start,
+                    end: data.outro.end,
+                    type: "Ending",
+                },
+            ],
+            sources: data.sources.map((source) => {
+                return {
+                    file: source.url,
+                    type: "hls",
+                    quality: source.quality,
+                };
+            }),
+            subtitles: subtitles,
+            headers: data.headers,
+        },
+        action: "video",
+    }, true);
 }

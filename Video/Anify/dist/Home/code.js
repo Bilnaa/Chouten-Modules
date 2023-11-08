@@ -1,12 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 async function logic(payload) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13;
     const data = JSON.parse(await sendRequest("https://api.anify.tv/seasonal?type=anime&apikey=a29078ed5ace232f708c0f2851530a61", {}));
-    const spotlight_data = [];
+    function capitalize(s) {
+        var _a, _b;
+        s = s.toLowerCase();
+        return s && ((_b = (_a = s[0]) === null || _a === void 0 ? void 0 : _a.toUpperCase()) !== null && _b !== void 0 ? _b : "") + s.slice(1);
+    }
+    const seasonalData = [];
     for (let i = 0; i < data.seasonal.length; i++) {
         const item = data.seasonal[i];
-        spotlight_data.push({
+        seasonalData.push({
             url: `https://api.anify.tv/info/${item.id}?apikey=a29078ed5ace232f708c0f2851530a61`,
             titles: {
                 primary: (_c = (_b = (_a = item.title.english) !== null && _a !== void 0 ? _a : item.title.romaji) !== null && _b !== void 0 ? _b : item.title.native) !== null && _c !== void 0 ? _c : "",
@@ -16,16 +21,16 @@ async function logic(payload) {
             subtitle: item.description,
             subtitleValue: [],
             buttonText: "Watch Now",
-            iconText: item.season,
+            iconText: capitalize(item.season),
             showIcon: false,
-            indicator: "Spotlight",
+            indicator: "Seasonal",
         });
     }
     const recents = JSON.parse(await sendRequest("https://api.anify.tv/recent?type=anime&apikey=a29078ed5ace232f708c0f2851530a61", {}));
-    const recents_data = [];
+    const recentData = [];
     for (let i = 0; i < (recents === null || recents === void 0 ? void 0 : recents.length); i++) {
         const item = recents[i];
-        recents_data.push({
+        recentData.push({
             url: `https://api.anify.tv/info/${item.id}?apikey=a29078ed5ace232f708c0f2851530a61`,
             titles: {
                 primary: (_j = (_h = (_g = item.title.english) !== null && _g !== void 0 ? _g : item.title.romaji) !== null && _h !== void 0 ? _h : item.title.native) !== null && _j !== void 0 ? _j : "",
@@ -38,17 +43,17 @@ async function logic(payload) {
             buttonText: "",
             indicator: item.season,
             current: Number((_q = (_p = (_o = item.episodes) === null || _o === void 0 ? void 0 : _o.latest) === null || _p === void 0 ? void 0 : _p.latestEpisode) !== null && _q !== void 0 ? _q : 0),
-            total: Number((_t = (_s = (_r = item.episodes) === null || _r === void 0 ? void 0 : _r.latest) === null || _s === void 0 ? void 0 : _s.totalEpisodes) !== null && _t !== void 0 ? _t : 0),
+            total: Number((_r = item.totalEpisodes) !== null && _r !== void 0 ? _r : 0),
         });
     }
-    const new_data = [];
-    for (let i = 0; i < ((_u = data.trending) === null || _u === void 0 ? void 0 : _u.length); i++) {
+    const trendingData = [];
+    for (let i = 0; i < ((_s = data.trending) === null || _s === void 0 ? void 0 : _s.length); i++) {
         const item = data.trending[i];
-        new_data.push({
+        trendingData.push({
             url: `https://api.anify.tv/info/${item.id}?apikey=a29078ed5ace232f708c0f2851530a61`,
             titles: {
-                primary: (_x = (_w = (_v = item.title.english) !== null && _v !== void 0 ? _v : item.title.romaji) !== null && _w !== void 0 ? _w : item.title.native) !== null && _x !== void 0 ? _x : "",
-                secondary: (_0 = (_z = (_y = item.title.native) !== null && _y !== void 0 ? _y : item.title.romaji) !== null && _z !== void 0 ? _z : item.title.english) !== null && _0 !== void 0 ? _0 : "",
+                primary: (_v = (_u = (_t = item.title.english) !== null && _t !== void 0 ? _t : item.title.romaji) !== null && _u !== void 0 ? _u : item.title.native) !== null && _v !== void 0 ? _v : "",
+                secondary: (_y = (_x = (_w = item.title.native) !== null && _w !== void 0 ? _w : item.title.romaji) !== null && _x !== void 0 ? _x : item.title.english) !== null && _y !== void 0 ? _y : "",
             },
             image: item.coverImage,
             subtitle: "",
@@ -56,18 +61,18 @@ async function logic(payload) {
             showIcon: false,
             buttonText: "",
             indicator: item.season,
-            current: Number((_3 = (_2 = (_1 = item.episodes) === null || _1 === void 0 ? void 0 : _1.latest) === null || _2 === void 0 ? void 0 : _2.latestEpisode) !== null && _3 !== void 0 ? _3 : 0),
-            total: Number((_6 = (_5 = (_4 = item.episodes) === null || _4 === void 0 ? void 0 : _4.latest) === null || _5 === void 0 ? void 0 : _5.totalEpisodes) !== null && _6 !== void 0 ? _6 : 0),
+            current: Number((_1 = (_0 = (_z = item.episodes) === null || _z === void 0 ? void 0 : _z.latest) === null || _0 === void 0 ? void 0 : _0.latestEpisode) !== null && _1 !== void 0 ? _1 : 0),
+            total: Number((_2 = item.totalEpisodes) !== null && _2 !== void 0 ? _2 : 0),
         });
     }
-    const top_viewed_data = [];
-    for (let i = 0; i < ((_7 = data.top) === null || _7 === void 0 ? void 0 : _7.length); i++) {
+    const topRatedData = [];
+    for (let i = 0; i < ((_3 = data.top) === null || _3 === void 0 ? void 0 : _3.length); i++) {
         const item = data.top[i];
-        top_viewed_data.push({
+        topRatedData.push({
             url: `https://api.anify.tv/info/${item.id}?apikey=a29078ed5ace232f708c0f2851530a61`,
             titles: {
-                primary: (_10 = (_9 = (_8 = item.title.english) !== null && _8 !== void 0 ? _8 : item.title.romaji) !== null && _9 !== void 0 ? _9 : item.title.native) !== null && _10 !== void 0 ? _10 : "",
-                secondary: (_13 = (_12 = (_11 = item.title.native) !== null && _11 !== void 0 ? _11 : item.title.romaji) !== null && _12 !== void 0 ? _12 : item.title.english) !== null && _13 !== void 0 ? _13 : "",
+                primary: (_6 = (_5 = (_4 = item.title.english) !== null && _4 !== void 0 ? _4 : item.title.romaji) !== null && _5 !== void 0 ? _5 : item.title.native) !== null && _6 !== void 0 ? _6 : "",
+                secondary: (_9 = (_8 = (_7 = item.title.native) !== null && _7 !== void 0 ? _7 : item.title.romaji) !== null && _8 !== void 0 ? _8 : item.title.english) !== null && _9 !== void 0 ? _9 : "",
             },
             image: item.coverImage,
             subtitle: "",
@@ -75,30 +80,30 @@ async function logic(payload) {
             showIcon: false,
             buttonText: "",
             indicator: item.season,
-            current: Number((_16 = (_15 = (_14 = item.episodes) === null || _14 === void 0 ? void 0 : _14.latest) === null || _15 === void 0 ? void 0 : _15.latestEpisode) !== null && _16 !== void 0 ? _16 : 0),
-            total: Number((_19 = (_18 = (_17 = item.episodes) === null || _17 === void 0 ? void 0 : _17.latest) === null || _18 === void 0 ? void 0 : _18.totalEpisodes) !== null && _19 !== void 0 ? _19 : 0),
+            current: Number((_12 = (_11 = (_10 = item.episodes) === null || _10 === void 0 ? void 0 : _10.latest) === null || _11 === void 0 ? void 0 : _11.latestEpisode) !== null && _12 !== void 0 ? _12 : 0),
+            total: Number((_13 = item.totalEpisodes) !== null && _13 !== void 0 ? _13 : 0),
         });
     }
     const result = [
         {
             type: "Carousel",
-            title: "Spotlight",
-            data: spotlight_data,
+            title: "Seasonal",
+            data: seasonalData,
         },
         {
             type: "list",
             title: "Recently Released",
-            data: recents_data,
+            data: recentData,
         },
         {
             type: "grid_2x",
             title: "Currently Trending",
-            data: new_data,
+            data: trendingData,
         },
         {
             type: "grid_3x",
-            title: "Most Viewed",
-            data: top_viewed_data,
+            title: "Highest Rated",
+            data: topRatedData,
         },
     ];
     sendResult({

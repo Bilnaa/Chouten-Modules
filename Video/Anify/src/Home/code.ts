@@ -1,13 +1,20 @@
+import { Anime, Seasonal } from "../anify-types";
+
 export {};
 
 async function logic(payload: BasePayload) {
-    const data = JSON.parse(await sendRequest("https://api.anify.tv/seasonal?type=anime&apikey=a29078ed5ace232f708c0f2851530a61", {}));
+    const data: Seasonal = JSON.parse(await sendRequest("https://api.anify.tv/seasonal?type=anime&apikey=a29078ed5ace232f708c0f2851530a61", {}));
 
-    const spotlight_data: Array<HompageData> = [];
+    function capitalize(s: string) {
+        s = s.toLowerCase();
+        return s && (s[0]?.toUpperCase() ?? "") + s.slice(1);
+    }
+
+    const seasonalData: Array<HompageData> = [];
     for (let i = 0; i < data.seasonal.length; i++) {
         const item = data.seasonal[i];
 
-        spotlight_data.push({
+        seasonalData.push({
             url: `https://api.anify.tv/info/${item.id}?apikey=a29078ed5ace232f708c0f2851530a61`,
             titles: {
                 primary: item.title.english ?? item.title.romaji ?? item.title.native ?? "",
@@ -17,20 +24,20 @@ async function logic(payload: BasePayload) {
             subtitle: item.description,
             subtitleValue: [],
             buttonText: "Watch Now",
-            iconText: item.season,
+            iconText: capitalize(item.season),
             showIcon: false,
-            indicator: "Spotlight",
+            indicator: "Seasonal",
         });
     }
 
-    const recents = JSON.parse(await sendRequest("https://api.anify.tv/recent?type=anime&apikey=a29078ed5ace232f708c0f2851530a61", {}));
+    const recents: Anime[] = JSON.parse(await sendRequest("https://api.anify.tv/recent?type=anime&apikey=a29078ed5ace232f708c0f2851530a61", {}));
 
-    const recents_data: Array<HompageData> = [];
+    const recentData: Array<HompageData> = [];
 
     for (let i = 0; i < recents?.length; i++) {
         const item = recents[i];
 
-        recents_data.push({
+        recentData.push({
             url: `https://api.anify.tv/info/${item.id}?apikey=a29078ed5ace232f708c0f2851530a61`,
             titles: {
                 primary: item.title.english ?? item.title.romaji ?? item.title.native ?? "",
@@ -43,15 +50,16 @@ async function logic(payload: BasePayload) {
             buttonText: "",
             indicator: item.season,
             current: Number(item.episodes?.latest?.latestEpisode ?? 0),
-            total: Number(item.episodes?.latest?.totalEpisodes ?? 0),
+            total: Number(item.totalEpisodes ?? 0),
         });
     }
 
-    const new_data: Array<HompageData> = [];
+    const trendingData: Array<HompageData> = [];
+
     for (let i = 0; i < data.trending?.length; i++) {
         const item = data.trending[i];
 
-        new_data.push({
+        trendingData.push({
             url: `https://api.anify.tv/info/${item.id}?apikey=a29078ed5ace232f708c0f2851530a61`,
             titles: {
                 primary: item.title.english ?? item.title.romaji ?? item.title.native ?? "",
@@ -64,15 +72,16 @@ async function logic(payload: BasePayload) {
             buttonText: "",
             indicator: item.season,
             current: Number(item.episodes?.latest?.latestEpisode ?? 0),
-            total: Number(item.episodes?.latest?.totalEpisodes ?? 0),
+            total: Number(item.totalEpisodes ?? 0),
         });
     }
 
-    const top_viewed_data: Array<HompageData> = [];
+    const topRatedData: Array<HompageData> = [];
+
     for (let i = 0; i < data.top?.length; i++) {
         const item = data.top[i];
 
-        top_viewed_data.push({
+        topRatedData.push({
             url: `https://api.anify.tv/info/${item.id}?apikey=a29078ed5ace232f708c0f2851530a61`,
             titles: {
                 primary: item.title.english ?? item.title.romaji ?? item.title.native ?? "",
@@ -85,30 +94,30 @@ async function logic(payload: BasePayload) {
             buttonText: "",
             indicator: item.season,
             current: Number(item.episodes?.latest?.latestEpisode ?? 0),
-            total: Number(item.episodes?.latest?.totalEpisodes ?? 0),
+            total: Number(item.totalEpisodes ?? 0),
         });
     }
 
     const result = [
         {
             type: "Carousel",
-            title: "Spotlight",
-            data: spotlight_data,
+            title: "Seasonal",
+            data: seasonalData,
         },
         {
             type: "list",
             title: "Recently Released",
-            data: recents_data,
+            data: recentData,
         },
         {
             type: "grid_2x",
             title: "Currently Trending",
-            data: new_data,
+            data: trendingData,
         },
         {
             type: "grid_3x",
-            title: "Most Viewed",
-            data: top_viewed_data,
+            title: "Highest Rated",
+            data: topRatedData,
         },
     ];
 

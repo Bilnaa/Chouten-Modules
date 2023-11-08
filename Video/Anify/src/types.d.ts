@@ -170,6 +170,7 @@ interface InfoData {
     secondary: string | undefined;
   };
   altTitles: string[];
+  banner: string;
   epListURLs: NonEmptyArray<string>;
   description: string | undefined;
   poster: string | null | undefined;

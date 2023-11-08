@@ -1,3 +1,5 @@
+import { Source } from "../anify-types";
+
 export {};
 
 async function logic(payload: BasePayload) {
@@ -15,11 +17,11 @@ async function logic(payload: BasePayload) {
 }
 
 async function getSource(payload: any) {
-    const data = JSON.parse(await sendRequest(payload.query, {}));
+    const data: Source = JSON.parse(await sendRequest(payload.query, {}));
 
     const subtitles: { url: string; language: string }[] = [];
 
-    data.subtitles.map((subtitle: any) => {
+    data.subtitles.map((subtitle) => {
         if (subtitle.lang.toLowerCase() === "thumbnails") {
             return [];
         }
@@ -27,34 +29,34 @@ async function getSource(payload: any) {
             url: subtitle.url,
             language: subtitle.lang,
         });
-    }),
-        sendResult(
-            {
-                result: {
-                    skips: [
-                        {
-                            start: data.intro.start,
-                            end: data.intro.end,
-                            type: "Opening",
-                        },
-                        {
-                            start: data.outro.start,
-                            end: data.outro.end,
-                            type: "Ending",
-                        },
-                    ],
-                    sources: data.sources.map((source: any) => {
-                        return {
-                            file: source.url,
-                            type: "hls",
-                            quality: source.quality,
-                        };
-                    }),
-                    subtitles: subtitles,
-                    headers: data.headers,
-                },
-                action: "video",
+    });
+    sendResult(
+        {
+            result: {
+                skips: [
+                    {
+                        start: data.intro.start,
+                        end: data.intro.end,
+                        type: "Opening",
+                    },
+                    {
+                        start: data.outro.start,
+                        end: data.outro.end,
+                        type: "Ending",
+                    },
+                ],
+                sources: data.sources.map((source) => {
+                    return {
+                        file: source.url,
+                        type: "hls",
+                        quality: source.quality,
+                    };
+                }),
+                subtitles: subtitles,
+                headers: data.headers,
             },
-            true
-        );
+            action: "video",
+        },
+        true
+    );
 }
