@@ -18,7 +18,7 @@ async function logic(payload: BasePayload) {
     const totalMediaCount = data.totalEpisodes ?? 0;
     const seasons: { name: string; url: string }[] = [];
 
-    const nextUrl = `https://api.eltik.net/episodes/${data.id}`;
+    const nextUrl = `https://api.anify.tv/episodes/${data.id}`;
 
     function capitalize(s: string) {
         s = s.toLowerCase();
@@ -55,7 +55,7 @@ async function getEpList(payload: BasePayload) {
 
     const results: { title: string; list: { url: string; title: string; number: number }[] }[] = [];
 
-    const episodeCovers = JSON.parse(await sendRequest(`https://api.eltik.net/content-metadata?id=${id}`, {}));
+    const episodeCovers = JSON.parse(await sendRequest(`https://api.anify.tv/content-metadata?id=${id}`, {}));
 
     for (let i = 0; i < data.length; i++) {
         const episodes = (data as EpisodeData[])[i]?.episodes ?? [];
@@ -86,7 +86,7 @@ async function getEpList(payload: BasePayload) {
             title: provider.providerId,
             list: (provider.episodes ?? []).map((e) => {
                 return {
-                    url: `https://api.eltik.net/sources?providerId=${provider.providerId}&watchId=${e.id}&episodeNumber=${e.number}&id=${id}&subType=${"sub"}`,
+                    url: `https://api.anify.tv/sources?providerId=${provider.providerId}&watchId=${e.id}&episodeNumber=${e.number}&id=${id}&subType=${"sub"}`,
                     title: e.title,
                     number: e.number,
                     image: e.img,

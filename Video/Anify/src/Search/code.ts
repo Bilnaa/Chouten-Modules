@@ -3,7 +3,7 @@ import { Anime } from "../anify-types";
 export {};
 
 async function logic(payload: BasePayload) {
-    const data: Anime[] = JSON.parse(await sendRequest(`https://api.eltik.net/search?query=${encodeURIComponent(payload.query)}&type=anime`, {}));
+    const data: Anime[] = JSON.parse(await sendRequest(`https://api.anify.tv/search?query=${encodeURIComponent(payload.query)}&type=anime`, {}));
 
     const titles: SearchData = [];
 
@@ -14,7 +14,7 @@ async function logic(payload: BasePayload) {
         const totalCount = data[i].totalEpisodes ?? 0;
 
         titles.push({
-            url: `https://api.eltik.net/info/${data[i].id}`,
+            url: `https://api.anify.tv/info/${data[i].id}`,
             img: data[i].coverImage ?? "",
             title: data[i].title.english ?? data[i].title.romaji ?? data[i].title.native ?? "No Title Found",
             indicatorText: `${hasSub ? "Sub" : ""}${hasSub && hasDub ? "|" : ""}${hasDub ? "Dub" : ""}`,
