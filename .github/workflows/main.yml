@@ -54,6 +54,7 @@ jobs:
 
           # Check and build for Video folder
           if [ -d "Video" ]; then
+            echo "Building Videos"
             cd Video
             build_and_copy
             cd ..
@@ -63,6 +64,7 @@ jobs:
 
           # Check and build for Book folder
           if [ -d "Book" ]; then
+            echo "Building Books"
             cd Book
             build_and_copy
             cd ..
@@ -72,6 +74,7 @@ jobs:
 
           # Check and build for Text folder
           if [ -d "Text" ]; then
+            echo "Building Texts"
             cd Text
             build_and_copy
             cd ..
