@@ -4,7 +4,7 @@ test:
 build: 
 	rm ./dist -rf
 	- tsc
-	cp ./src/* ./dist/
+	cp ./src/* ./dist/ -r
 
 build-module:
 	- make build
