@@ -56,6 +56,7 @@ async function getEpList(payload) {
             }),
         });
     });
+    results.reverse();
     sendResult({
         result: results,
         action: "eplist",

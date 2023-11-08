@@ -68,6 +68,8 @@ async function getEpList(payload: BasePayload) {
         });
     });
 
+    results.reverse();
+
     sendResult(
         {
             result: results,

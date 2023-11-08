@@ -4,7 +4,7 @@
   "moduleType": "source",
   "subtypes": ["anime"],
   "name": "Anify",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "formatVersion": 1,
   "updateUrl": "https://github.com/enimax-anime/chouten-modules/raw/built/Anify.module",
   "general": {
