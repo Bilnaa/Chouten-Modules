@@ -36,7 +36,7 @@
 
 # Structure of code.js
 
-You can put any functions in code.js, but there are some things that the js file **must** include:
+You can put any functions in code.js, but there are some functions that the js file already has access to:
 
 1. A function named `logic`: The logic function is an `async` function, that will receive a parameter which will be a JSON Object. Refer to the demo code to see when this is relevant. (todo)
    * **Signature**: `logic(params: { [key: string]: string }): Promise<void>`
