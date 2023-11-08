@@ -48,20 +48,39 @@ async function logic(payload: BasePayload) {
     });
 }
 
-async function getEpList(payload: any) {
+async function getEpList(payload: BasePayload) {
     const data: EpisodeData[] = JSON.parse(await sendRequest(payload.query, {}));
 
+    const id = payload.query.split("/episodes/")[1].split("?apikey=")[0];
+
     const results: { title: string; list: { url: string; title: string; number: number }[] }[] = [];
+
+    const episodeCovers = JSON.parse(await sendRequest(`https://api.anify.tv/episode-covers?id=${id}&apikey=a29078ed5ace232f708c0f2851530a61`, {}));
+
+    for (let i = 0; i < data.length; i++) {
+        const episodes = (data as EpisodeData[])[i]?.episodes ?? [];
+        for (let j = 0; j < episodes.length; j++) {
+            const episodeNumber = episodes[j]?.number ?? 0;
+            for (let k = 0; k < episodeCovers.length; k++) {
+                if (episodeCovers[k]?.episode === episodeNumber) {
+                    if (!episodes[j]?.img || episodes[j]?.img?.length === 0) {
+                        Object.assign((data as EpisodeData[])[i]?.episodes[j] ?? {}, { img: episodeCovers[k]?.img });
+                    }
+                    break;
+                }
+            }
+        }
+    }
 
     data.map((provider) => {
         results.push({
             title: provider.providerId,
             list: (provider.episodes ?? []).map((e) => {
                 return {
-                    url: `https://api.anify.tv/sources?providerId=${provider.providerId}&watchId=${e.id}&episode=${e.number}&id=${payload.query.split("/episodes/")[1].split("&apikey=")[0]}&subType=${"sub"}&apikey=a29078ed5ace232f708c0f2851530a61`,
+                    url: `https://api.anify.tv/sources?providerId=${provider.providerId}&watchId=${e.id}&episode=${e.number}&id=${id}&subType=${"sub"}&apikey=a29078ed5ace232f708c0f2851530a61`,
                     title: e.title,
                     number: e.number,
-                    image: e.img ?? "",
+                    image: e.img,
                     isFiller: e.isFiller,
                 };
             }),

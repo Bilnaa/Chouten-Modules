@@ -40,8 +40,25 @@ async function logic(payload) {
     });
 }
 async function getEpList(payload) {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
     const data = JSON.parse(await sendRequest(payload.query, {}));
+    const id = payload.query.split("/episodes/")[1].split("?apikey=")[0];
     const results = [];
+    const episodeCovers = JSON.parse(await sendRequest(`https://api.anify.tv/episode-covers?id=${id}&apikey=a29078ed5ace232f708c0f2851530a61`, {}));
+    for (let i = 0; i < data.length; i++) {
+        const episodes = (_b = (_a = data[i]) === null || _a === void 0 ? void 0 : _a.episodes) !== null && _b !== void 0 ? _b : [];
+        for (let j = 0; j < episodes.length; j++) {
+            const episodeNumber = (_d = (_c = episodes[j]) === null || _c === void 0 ? void 0 : _c.number) !== null && _d !== void 0 ? _d : 0;
+            for (let k = 0; k < episodeCovers.length; k++) {
+                if (((_e = episodeCovers[k]) === null || _e === void 0 ? void 0 : _e.episode) === episodeNumber) {
+                    if (!((_f = episodes[j]) === null || _f === void 0 ? void 0 : _f.img) || ((_h = (_g = episodes[j]) === null || _g === void 0 ? void 0 : _g.img) === null || _h === void 0 ? void 0 : _h.length) === 0) {
+                        Object.assign((_k = (_j = data[i]) === null || _j === void 0 ? void 0 : _j.episodes[j]) !== null && _k !== void 0 ? _k : {}, { img: (_l = episodeCovers[k]) === null || _l === void 0 ? void 0 : _l.img });
+                    }
+                    break;
+                }
+            }
+        }
+    }
     data.map((provider) => {
         var _a;
         results.push({
@@ -49,7 +66,7 @@ async function getEpList(payload) {
             list: ((_a = provider.episodes) !== null && _a !== void 0 ? _a : []).map((e) => {
                 var _a;
                 return {
-                    url: `https://api.anify.tv/sources?providerId=${provider.providerId}&watchId=${e.id}&episode=${e.number}&id=${payload.query.split("/episodes/")[1].split("&apikey=")[0]}&subType=${"sub"}&apikey=a29078ed5ace232f708c0f2851530a61`,
+                    url: `https://api.anify.tv/sources?providerId=${provider.providerId}&watchId=${e.id}&episode=${e.number}&id=${id}&subType=${"sub"}&apikey=a29078ed5ace232f708c0f2851530a61`,
                     title: e.title,
                     number: e.number,
                     image: (_a = e.img) !== null && _a !== void 0 ? _a : "",
