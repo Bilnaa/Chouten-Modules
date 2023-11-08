@@ -92,7 +92,7 @@ async function logic(payload) {
         },
         {
             type: "grid_2x",
-            title: "Now on Zoro",
+            title: "Currently Trending",
             data: new_data,
         },
         {
