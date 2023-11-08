@@ -1,4 +1,4 @@
-name = $(shell jq .name ./dist/metadata.json -r)
+name = $(shell jq .name ./src/metadata.json -r)
 test:
 	echo $(src_dir)
 build: 
