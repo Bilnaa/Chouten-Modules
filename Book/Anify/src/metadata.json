@@ -1,0 +1,18 @@
+{
+  "id": "befd2b7c-5df7-421d-b524-7f42547e5806",
+  "type": "Book",
+  "moduleType": "source",
+  "subtypes": ["manga"],
+  "name": "Anify-Manga",
+  "version": "0.1.0",
+  "formatVersion": 1,
+  "updateUrl": "https://github.com/enimax-anime/chouten-modules/raw/built/Anify-Manga.module",
+  "general": {
+    "author": "Eltik",
+    "description": "A module to get the manga data from Anify.",
+    "lang": ["en-US"],
+    "baseURL": "https://anify.tv",
+    "bgColor": "#4CB875",
+    "fgColor": "#000000"
+  }
+}

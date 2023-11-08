@@ -1,8 +1,8 @@
 export interface Seasonal {
-    trending: Anime[];
-    popular: Anime[];
-    top: Anime[];
-    seasonal: Anime[];
+    trending: Manga[];
+    popular: Manga[];
+    top: Manga[];
+    seasonal: Manga[];
 }
 
 export const enum ProviderType {
@@ -33,18 +33,8 @@ export interface Anime {
     duration: number | null;
     color: string | null;
     year: number | null;
-    rating: {
-        anilist: number;
-        mal: number;
-        kitsu: number;
-        simkl: number;
-    };
-    popularity: {
-        anilist: number;
-        mal: number;
-        kitsu: number;
-        simkl: number;
-    };
+    rating: { [key: string]: number } | null;
+    popularity: { [key: string]: number } | null;
     averageRating: number;
     averagePopularity: number;
     type: Type;

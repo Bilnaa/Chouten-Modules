@@ -62,9 +62,10 @@ The `metadata.json` file is for all information on what the module is about. Ple
   }
 }
 ```
+**Please make sure that the `id` field must be unique.**
 
 ## Building Modules
-As of now, building modules is all handled by the `Makefile` and `npm` packages. To build your code to see if there are errors, run `npm run build`. This will delete the `/dist/` directory and use `tsc` to build the code. To build a module, run `make build-module`. This will run `npm run build` and zip the code in the `/dist/` folder into a `.module` file. **If your module does not contain a name** and you have provided it in the `/src/metadata.json` file, make sure you have `jq` installed. You can install it via the following:
+As of now, building modules is all handled by the `Makefile` and `npm` packages. To build your code to see if there are errors, run `npm run build`. This will delete and recreate the `/dist/` directory and use `tsc` to build the code. To build a module, run `make build-module`. This will run `npm run build` and zip the code in the `/dist/` folder into a `.module` file. **If your module does not contain a name** and you have provided it in the `/src/metadata.json` file, make sure you have `jq` installed. You can install it via the following:
 ```bash
 # Homebrew (MacOS users)
 $ brew install jq

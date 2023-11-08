@@ -1,9 +1,9 @@
 {
-  "id": "d74e616c-eb95-459a-b282-e5cf6c4335fa",
-  "type": "Video",
+  "id": "befd2b7c-5df7-421d-b524-7f42547e5806",
+  "type": "Book",
   "moduleType": "source",
-  "subtypes": ["anime"],
-  "name": "Template-Anime",
+  "subtypes": ["manga"],
+  "name": "Template-Manga",
   "version": "0.1.0",
   "formatVersion": 1,
   "updateUrl": "https://raw.githubusercontent.com/Eltik/anify-module/master/module.json",
