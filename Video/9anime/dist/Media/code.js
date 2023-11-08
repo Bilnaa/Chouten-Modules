@@ -18,7 +18,7 @@ async function getVRF(query, action) {
     }
 }
 async function getVidstreamLink(query, isViz = true) {
-    var _a, _b, _c, _d;
+    var _a, _b;
     const nineAnimeURL = "9anime.eltik.net";
     const apiKey = "enimax";
     const reqURL = `https://${nineAnimeURL}/raw${isViz ? "Vizcloud" : "Mcloud"}?query=${encodeURIComponent(query)}&apikey=${apiKey}`;
@@ -29,7 +29,6 @@ async function getVidstreamLink(query, isViz = true) {
         query,
         futoken
     }).toString())).rawURL;
-    console.log(rawSource);
     const source = await sendRequest(rawSource, {
         "referer": isViz ? "https://vidstream.pro/" : "https://mcloud.to/",
         "x-requested-with": "XMLHttpRequest"
@@ -37,21 +36,12 @@ async function getVidstreamLink(query, isViz = true) {
     try {
         const parsedJSON = JSON.parse(source);
         const manifestUrl = (_b = (_a = parsedJSON === null || parsedJSON === void 0 ? void 0 : parsedJSON.result) === null || _a === void 0 ? void 0 : _a.sources[0]) === null || _b === void 0 ? void 0 : _b.file;
-        if ((_d = (_c = parsedJSON === null || parsedJSON === void 0 ? void 0 : parsedJSON.result) === null || _c === void 0 ? void 0 : _c.sources[0]) === null || _d === void 0 ? void 0 : _d.file) {
-            const manifestFile = await sendRequest(parsedJSON.result.sources[0].file, { referer: "https://vidstream.pro/" });
-            const resolutions = manifestFile.split("\\n\\n")[0].match(/(RESOLUTION=)(.*)(\s*?)(\s*.*)/g);
-            const qualities = [];
-            for (const res of resolutions) {
-                const quality = res.split('\n')[0].split('x')[1].split(',')[0];
-                const reconstructedFile = await reconstructM3u8File((new URL(res.split('\n')[1], manifestUrl)).toString(), isViz);
-                console.log(reconstructedFile);
-                qualities.push({
-                    file: reconstructedFile,
-                    type: "hls",
-                    quality: quality + 'p',
-                });
-            }
-            return qualities;
+        if (manifestUrl) {
+            return [{
+                    file: manifestUrl,
+                    quality: isViz ? "Vizcloud" : "Mcloud",
+                    type: "hls"
+                }];
         }
         else {
             throw new Error("VIZCLOUD1: Received an empty URL or the URL was not found.");
@@ -110,8 +100,7 @@ async function logic(payload) {
         title: "Video",
         list: []
     });
-    // const supportedServers = ["vidstream", "mycloud"];
-    const supportedServers = ["filemoon"];
+    const supportedServers = ["vidstream", "mycloud", "filemoon"];
     for (let i = 0; i < allServers.length; i++) {
         let currentServer = allServers[i];
         let type = i.toString();
@@ -174,11 +163,25 @@ async function getSource(payload) {
     const serverID = serverInfo[0];
     const serverName = serverInfo[1];
     const sources = await addSource(serverID, "", serverName);
+    const headers = {};
+    if (serverName === "vidstream") {
+        headers["referer"] = "https://vidstream.pro/";
+    }
+    else if (serverName === "mycloud") {
+        headers["referer"] = "https://mcloud.to/";
+    }
+    console.log({
+        sources: sources,
+        subtitles: [],
+        skips: [],
+        headers,
+    });
     sendResult({
         result: {
             sources: sources,
             subtitles: [],
-            skips: []
+            skips: [],
+            headers,
         },
         action: "video",
     });

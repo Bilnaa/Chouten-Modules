@@ -33,8 +33,6 @@ async function getVidstreamLink(query: string, isViz = true): Promise<MediaQuali
         }).toString())
     ).rawURL;
 
-    console.log(rawSource);
-
     const source = await sendRequest(
         rawSource,
         {
@@ -46,8 +44,12 @@ async function getVidstreamLink(query: string, isViz = true): Promise<MediaQuali
     try {
         const parsedJSON = JSON.parse(source);
         const manifestUrl = parsedJSON?.result?.sources[0]?.file;
-        if (parsedJSON?.result?.sources[0]?.file) {
-            return parsedJSON.result.sources[0].file;
+        if (manifestUrl) {
+            return [{
+                file: manifestUrl,
+                quality: isViz ? "Vizcloud" : "Mcloud",
+                type: "hls"
+            }];
         } else {
             throw new Error("VIZCLOUD1: Received an empty URL or the URL was not found.");
         }
@@ -197,11 +199,27 @@ async function getSource(payload: BasePayload) {
     const serverName = serverInfo[1];
     const sources = await addSource(serverID, "", serverName);
 
+    const headers: {[key: string]: string} = {};
+
+    if(serverName === "vidstream"){
+        headers["referer"] = "https://vidstream.pro/";
+    }else if(serverName === "mycloud"){
+        headers["referer"] = "https://mcloud.to/";
+    }
+
+    console.log({
+        sources: sources,
+        subtitles: [],
+        skips: [],
+        headers,
+    });
+    
     sendResult({
         result: {
             sources: sources,
             subtitles: [],
-            skips: []
+            skips: [],
+            headers,
         },
         action: "video",
     });

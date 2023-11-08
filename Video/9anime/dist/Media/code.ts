@@ -33,8 +33,6 @@ async function getVidstreamLink(query: string, isViz = true): Promise<MediaQuali
         }).toString())
     ).rawURL;
 
-    console.log(rawSource);
-
     const source = await sendRequest(
         rawSource,
         {
@@ -46,23 +44,12 @@ async function getVidstreamLink(query: string, isViz = true): Promise<MediaQuali
     try {
         const parsedJSON = JSON.parse(source);
         const manifestUrl = parsedJSON?.result?.sources[0]?.file;
-        if (parsedJSON?.result?.sources[0]?.file) {
-            const manifestFile = await sendRequest(parsedJSON.result.sources[0].file, { referer: "https://vidstream.pro/" });
-            const resolutions = manifestFile.split("\\n\\n")[0].match(/(RESOLUTION=)(.*)(\s*?)(\s*.*)/g)!;
-            const qualities: MediaQuality[] = [];
-
-            for (const res of resolutions) {
-                const quality = res.split('\n')[0].split('x')[1].split(',')[0];
-                const reconstructedFile = await reconstructM3u8File((new URL(res.split('\n')[1], manifestUrl)).toString(), isViz);
-                console.log(reconstructedFile);
-                qualities.push({
-                    file: reconstructedFile,
-                    type: "hls",
-                    quality: quality + 'p',
-                });
-            }
-
-            return qualities;
+        if (manifestUrl) {
+            return [{
+                file: manifestUrl,
+                quality: isViz ? "Vizcloud" : "Mcloud",
+                type: "hls"
+            }];
         } else {
             throw new Error("VIZCLOUD1: Received an empty URL or the URL was not found.");
         }
@@ -135,8 +122,7 @@ async function logic(payload: BasePayload) {
         list: []
     });
 
-    // const supportedServers = ["vidstream", "mycloud"];
-    const supportedServers = ["filemoon"];
+    const supportedServers = ["vidstream", "mycloud", "filemoon"];
 
     for (let i = 0; i < allServers.length; i++) {
         let currentServer = allServers[i];
@@ -213,11 +199,27 @@ async function getSource(payload: BasePayload) {
     const serverName = serverInfo[1];
     const sources = await addSource(serverID, "", serverName);
 
+    const headers: {[key: string]: string} = {};
+
+    if(serverName === "vidstream"){
+        headers["referer"] = "https://vidstream.pro/";
+    }else if(serverName === "mycloud"){
+        headers["referer"] = "https://mcloud.to/";
+    }
+
+    console.log({
+        sources: sources,
+        subtitles: [],
+        skips: [],
+        headers,
+    });
+    
     sendResult({
         result: {
             sources: sources,
             subtitles: [],
-            skips: []
+            skips: [],
+            headers,
         },
         action: "video",
     });

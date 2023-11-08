@@ -198,6 +198,7 @@ interface MediaVideo {
         end: number;
         type: string;
     }[];
+    headers: {[key: string]: string},
     sources: MediaQuality[];
     subtitles: {
         url: string,
