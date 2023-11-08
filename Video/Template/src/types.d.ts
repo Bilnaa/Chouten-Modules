@@ -5,7 +5,7 @@ interface BasePayload {
   action: string;
 }
 
-type BaseResult =
+declare type BaseResult =
   | {
       action: "search";
       result: SearchData;
@@ -31,8 +31,8 @@ type BaseResult =
       result: MediaVideo;
     };
 
-let reqId = 0;
-const resolveFunctions: { [key: string]: Function } = {};
+declare let reqId = 0;
+declare const resolveFunctions: { [key: string]: Function } = {};
 
 // window.onmessage = async function (event: MessageEvent) {
 //     const data = JSON.parse(event.data);
@@ -48,7 +48,7 @@ const resolveFunctions: { [key: string]: Function } = {};
 //     }
 // }
 
-function loadScript(url: string) {
+declare function loadScript(url: string) {
   return new Promise((resolve, reject) => {
     const script = document.createElement("script");
 
@@ -60,7 +60,7 @@ function loadScript(url: string) {
   });
 }
 
-function sendRequest(
+declare function sendRequest(
   url: string,
   headers: { [key: string]: string },
   method?: string,
@@ -84,7 +84,7 @@ function sendRequest(
   });
 }
 
-function sendResult(result: BaseResult, last = false) {
+declare function sendResult(result: BaseResult, last = false) {
   const currentReqId = (++reqId).toString();
 
   Native.sendHTTPRequest(
@@ -97,7 +97,7 @@ function sendResult(result: BaseResult, last = false) {
   );
 }
 
-function sendSignal(signal: number, message = "") {
+declare function sendSignal(signal: number, message = "") {
   const currentReqId = (++reqId).toString();
 
   Native.sendHTTPRequest(
