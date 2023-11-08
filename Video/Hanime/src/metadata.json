@@ -9,7 +9,7 @@
     "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
     "general": {
       "author": "Femalemonkeyman",
-      "description": "A module to get the data from gogoanime",
+      "description": "A module to get the data from hanime",
       "lang": ["en-US"],
       "baseURL": "https://mymodule.com",
       "bgColor":  "#000000",
