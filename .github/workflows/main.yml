@@ -46,8 +46,7 @@ jobs:
           make build-module
           cp ./*.module /home/runner
           cp ./src/icon.png /home/runner/images/"$folder_name".png
-          cd ..
-
+          
           # Navigate back to the main directory
           cd ..
         done
