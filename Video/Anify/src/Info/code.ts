@@ -55,24 +55,27 @@ async function getEpList(payload: BasePayload) {
 
     const results: { title: string; list: { url: string; title: string; number: number }[] }[] = [];
 
-    const episodeCovers =
-        JSON.parse(await sendRequest(`https://api.eltik.net/content-metadata?id=${id}`, {})).map((provider) => {
-            if (provider.providerId === "tvdb" || provider.providerId === "tmdb") {
-                return provider.data;
-            }
-        })[0]?.data ?? [];
+    const episodeCovers = JSON.parse(await sendRequest(`https://api.eltik.net/content-metadata?id=${id}`, {}));
 
     for (let i = 0; i < data.length; i++) {
         const episodes = (data as EpisodeData[])[i]?.episodes ?? [];
         for (let j = 0; j < episodes.length; j++) {
             const episodeNumber = episodes[j]?.number ?? 0;
             for (let k = 0; k < episodeCovers.length; k++) {
-                if (episodeCovers[k]?.episode === episodeNumber) {
-                    if (!episodes[j]?.img || episodes[j]?.img?.length === 0) {
-                        Object.assign((data as EpisodeData[])[i]?.episodes[j] ?? {}, { img: episodeCovers[k]?.img });
-                        Object.assign((data as EpisodeData[])[i]?.episodes[j] ?? {}, { description: episodeCovers[k]?.description ?? "N/A" });
+                for (let l = 0; l < (episodeCovers[k]?.data ?? []).length; l++) {
+                    if (episodeCovers[k]?.data[l]?.number === episodeNumber) {
+                        if (episodeCovers[k]?.data[l]?.img) {
+                            if (!episodes[j]?.img) {
+                                Object.assign((data as EpisodeData[])[i]?.episodes[j] ?? {}, { img: episodeCovers[k]?.data[l]?.img });
+                            }
+                        }
+                        if (episodeCovers[k]?.data[l]?.description) {
+                            if (!episodes[j]?.description) {
+                                Object.assign((data as EpisodeData[])[i]?.episodes[j] ?? {}, { description: episodeCovers[k]?.data[l]?.description });
+                            }
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }

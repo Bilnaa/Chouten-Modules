@@ -21,7 +21,7 @@ async function logic(payload: BasePayload) {
                 secondary: item.title.native ?? item.title.romaji ?? item.title.english ?? "",
             },
             image: item.coverImage,
-            subtitle: item.description,
+            subtitle: new DOMParser().parseFromString(item.description ?? "", "text/html").body.textContent ?? item.description ?? "",
             subtitleValue: [],
             buttonText: "Watch Now",
             iconText: capitalize(item.season),

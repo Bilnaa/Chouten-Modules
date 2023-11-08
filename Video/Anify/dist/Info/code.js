@@ -40,26 +40,30 @@ async function logic(payload) {
     });
 }
 async function getEpList(payload) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x;
     const data = JSON.parse(await sendRequest(payload.query, {}));
     const id = payload.query.split("/episodes/")[1].split("?apikey=")[0];
     const results = [];
-    const episodeCovers = (_b = (_a = JSON.parse(await sendRequest(`https://api.eltik.net/content-metadata?id=${id}`, {})).map((provider) => {
-        if (provider.providerId === "tvdb" || provider.providerId === "tmdb") {
-            return provider.data;
-        }
-    })[0]) === null || _a === void 0 ? void 0 : _a.data) !== null && _b !== void 0 ? _b : [];
+    const episodeCovers = JSON.parse(await sendRequest(`https://api.eltik.net/content-metadata?id=${id}`, {}));
     for (let i = 0; i < data.length; i++) {
-        const episodes = (_d = (_c = data[i]) === null || _c === void 0 ? void 0 : _c.episodes) !== null && _d !== void 0 ? _d : [];
+        const episodes = (_b = (_a = data[i]) === null || _a === void 0 ? void 0 : _a.episodes) !== null && _b !== void 0 ? _b : [];
         for (let j = 0; j < episodes.length; j++) {
-            const episodeNumber = (_f = (_e = episodes[j]) === null || _e === void 0 ? void 0 : _e.number) !== null && _f !== void 0 ? _f : 0;
+            const episodeNumber = (_d = (_c = episodes[j]) === null || _c === void 0 ? void 0 : _c.number) !== null && _d !== void 0 ? _d : 0;
             for (let k = 0; k < episodeCovers.length; k++) {
-                if (((_g = episodeCovers[k]) === null || _g === void 0 ? void 0 : _g.episode) === episodeNumber) {
-                    if (!((_h = episodes[j]) === null || _h === void 0 ? void 0 : _h.img) || ((_k = (_j = episodes[j]) === null || _j === void 0 ? void 0 : _j.img) === null || _k === void 0 ? void 0 : _k.length) === 0) {
-                        Object.assign((_m = (_l = data[i]) === null || _l === void 0 ? void 0 : _l.episodes[j]) !== null && _m !== void 0 ? _m : {}, { img: (_o = episodeCovers[k]) === null || _o === void 0 ? void 0 : _o.img });
-                        Object.assign((_q = (_p = data[i]) === null || _p === void 0 ? void 0 : _p.episodes[j]) !== null && _q !== void 0 ? _q : {}, { description: (_s = (_r = episodeCovers[k]) === null || _r === void 0 ? void 0 : _r.description) !== null && _s !== void 0 ? _s : "N/A" });
+                for (let l = 0; l < ((_f = (_e = episodeCovers[k]) === null || _e === void 0 ? void 0 : _e.data) !== null && _f !== void 0 ? _f : []).length; l++) {
+                    if (((_h = (_g = episodeCovers[k]) === null || _g === void 0 ? void 0 : _g.data[l]) === null || _h === void 0 ? void 0 : _h.number) === episodeNumber) {
+                        if ((_k = (_j = episodeCovers[k]) === null || _j === void 0 ? void 0 : _j.data[l]) === null || _k === void 0 ? void 0 : _k.img) {
+                            if (!((_l = episodes[j]) === null || _l === void 0 ? void 0 : _l.img)) {
+                                Object.assign((_o = (_m = data[i]) === null || _m === void 0 ? void 0 : _m.episodes[j]) !== null && _o !== void 0 ? _o : {}, { img: (_q = (_p = episodeCovers[k]) === null || _p === void 0 ? void 0 : _p.data[l]) === null || _q === void 0 ? void 0 : _q.img });
+                            }
+                        }
+                        if ((_s = (_r = episodeCovers[k]) === null || _r === void 0 ? void 0 : _r.data[l]) === null || _s === void 0 ? void 0 : _s.description) {
+                            if (!((_t = episodes[j]) === null || _t === void 0 ? void 0 : _t.description)) {
+                                Object.assign((_v = (_u = data[i]) === null || _u === void 0 ? void 0 : _u.episodes[j]) !== null && _v !== void 0 ? _v : {}, { description: (_x = (_w = episodeCovers[k]) === null || _w === void 0 ? void 0 : _w.data[l]) === null || _x === void 0 ? void 0 : _x.description });
+                            }
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }

@@ -258,6 +258,7 @@ export type Episode = {
     img: string | null;
     hasDub: boolean;
     updatedAt?: number;
+    description?: string;
 };
 
 export type EpisodeData = {
