@@ -51,6 +51,8 @@ jobs:
           cd ..
         done
 
+        cd ..
+
         cd Book
         # Loop through subfolders
         for folder in */; do
@@ -69,6 +71,8 @@ jobs:
           # Navigate back to the main directory
           cd ..
         done
+
+        cd ..
 
         cd Text
         # Loop through subfolders
