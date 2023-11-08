@@ -1,6 +1,6 @@
-async function logic(payload: string = "") {
-    
-    const html = await sendRequest(`https://aniwatch.to/search?keyword=${encodeURIComponent(payload)}`, {});
+async function logic(payload: BasePayload) {
+
+    const html = await sendRequest(`https://aniwatch.to/search?keyword=${encodeURIComponent(payload.query)}`, {});
 
     const document = (new DOMParser()).parseFromString(html, "text/html");
 
@@ -31,5 +31,8 @@ async function logic(payload: string = "") {
         });
     }
 
-    sendResult(JSON.stringify(titles));
+    sendResult({
+        action: "search",
+        result: titles
+    });
 }

@@ -44,7 +44,7 @@ function sendResult(result, last = false) {
         reqId: currentReqId,
         action: "result",
         shouldExit: last,
-        result
+        result: JSON.stringify(result)
     }));
 }
 function sendSignal(signal, message = "") {

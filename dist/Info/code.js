@@ -1,7 +1,7 @@
 "use strict";
-async function logic(payload = "") {
+async function logic(payload) {
     var _a, _b, _c, _d, _e, _f, _g, _h;
-    const html = await sendRequest(payload, {});
+    const html = await sendRequest(payload.query, {});
     const document = (new DOMParser()).parseFromString(html, "text/html");
     const titles = {
         primary: (_b = (_a = document.querySelector(".film-name.dynamic-name")) === null || _a === void 0 ? void 0 : _a.innerText) !== null && _b !== void 0 ? _b : "",
@@ -16,10 +16,13 @@ async function logic(payload = "") {
         return { name: season.innerText.trim(), url: `https://aniwatch.to${season.getAttribute('href')}` };
     });
     let nextUrl = "https://aniwatch.to/ajax/v2/episode/list/" + ((_h = document.getElementById("wrapper")) === null || _h === void 0 ? void 0 : _h.getAttribute("data-id"));
-    sendResult(JSON.stringify({
+    sendResult({
         result: {
             id: "",
             titles: titles,
+            epListURLs: [
+                nextUrl
+            ],
             altTitles: [],
             description: description,
             poster: poster,
@@ -27,14 +30,13 @@ async function logic(payload = "") {
             totalMediaCount: parseInt(totalMediaCount),
             mediaType: "Episodes",
             seasons: seasons,
-            mediaList: [],
+            mediaList: []
         },
-        nextUrl: null,
-    }));
-    getEpList(nextUrl);
+        action: "metadata",
+    });
 }
-async function getEpList(url) {
-    const myJsonObject = JSON.parse(await sendRequest(url, {}));
+async function getEpList(payload) {
+    const myJsonObject = JSON.parse(await sendRequest(payload.query, {}));
     const document = (new DOMParser()).parseFromString(myJsonObject.html, "text/html");
     const allEpInfo = [...document.querySelectorAll(".ssl-item.ep-item")].map((e) => {
         var _a, _b, _c;
@@ -45,8 +47,11 @@ async function getEpList(url) {
             number: parseFloat((_c = e.getAttribute("data-number")) !== null && _c !== void 0 ? _c : ""),
         };
     });
-    sendResult(JSON.stringify([{
-            title: "Season 1",
-            list: allEpInfo
-        }]), true);
+    sendResult({
+        result: [{
+                title: "Season 1",
+                list: allEpInfo
+            }],
+        action: "eplist"
+    }, true);
 }

@@ -1,7 +1,7 @@
 "use strict";
-async function logic(payload = "") {
+async function logic(payload) {
     var _a;
-    const html = await sendRequest(`https://aniwatch.to/search?keyword=${encodeURIComponent(payload)}`, {});
+    const html = await sendRequest(`https://aniwatch.to/search?keyword=${encodeURIComponent(payload.query)}`, {});
     const document = (new DOMParser()).parseFromString(html, "text/html");
     const elements = document.querySelectorAll(".film_list-wrap .film-detail > h3 > a");
     const images = document.querySelectorAll(".film_list-wrap .film-poster > img");
@@ -21,5 +21,8 @@ async function logic(payload = "") {
             totalCount: parseInt(counts[1]),
         });
     }
-    sendResult(JSON.stringify(titles));
+    sendResult({
+        action: "search",
+        result: titles
+    });
 }

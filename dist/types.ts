@@ -1,3 +1,30 @@
+type NonEmptyArray<T> = [T, ...T[]];
+
+interface BasePayload {
+    query: string,
+    action: string
+}
+
+type BaseResult = {
+    action: "search"
+    result: SearchData
+} | {
+    action: "homepage"
+    result: HomepageFinalData[]
+} | {
+    action: "metadata"
+    result: InfoData
+} | {
+    action: "eplist"
+    result: InfoEpisodeList[]
+} | {
+    action: "server"
+    result: MediaDataResult[]
+} | {
+    action: "video"
+    result: MediaVideo
+};
+
 let reqId = 0;
 let resolveFunctions: { [key: string]: Function } = {};
 
@@ -15,10 +42,10 @@ window.onmessage = async function (event: MessageEvent) {
     }
 }
 
-function loadScript(url: string){
+function loadScript(url: string) {
     return new Promise((resolve, reject) => {
         const script = document.createElement('script');
-        
+
         script.src = url;
         script.onload = resolve;
         script.onerror = reject;
@@ -43,7 +70,7 @@ function sendRequest(url: string, headers: { [key: string]: string }): Promise<s
     });
 }
 
-function sendResult(result: string, last = false) {
+function sendResult(result: BaseResult, last = false) {
     const currentReqId = (++reqId).toString();
 
     // @ts-ignore
@@ -51,7 +78,7 @@ function sendResult(result: string, last = false) {
         reqId: currentReqId,
         action: "result",
         shouldExit: last,
-        result
+        result: JSON.stringify(result)
     }));
 }
 
@@ -88,12 +115,9 @@ type HompageData = {
 };
 
 type HomepageFinalData = {
-    result: {
-        type: "Carousel" | "list" | "grid_<number>x" | string,
-        title: string,
-        data: HompageData[]
-    }[],
-    nextUrl: null | string;
+    type: "Carousel" | "list" | "grid_<number>x" | string,
+    title: string,
+    data: HompageData[]
 }
 
 interface RequestObject {
@@ -115,24 +139,23 @@ interface RequestData {
 // =====================
 
 interface InfoData {
-    result: {
-        id: string;
-        titles: {
-            primary: string;
-            secondary: string | undefined;
-        };
-        altTitles: string[];
-        description: string | undefined;
-        poster: string | null | undefined;
-        status: string | undefined;
-        totalMediaCount: number;
-        mediaType: string;
-        seasons: {
-            name: string;
-            url: string;
-        }[];
-        mediaList: any[];
-    }
+    id: string;
+    titles: {
+        primary: string;
+        secondary: string | undefined;
+    };
+    altTitles: string[];
+    epListURLs: NonEmptyArray<string>;
+    description: string | undefined;
+    poster: string | null | undefined;
+    status: string | undefined;
+    totalMediaCount: number;
+    mediaType: string;
+    seasons: {
+        name: string;
+        url: string;
+    }[];
+    mediaList: any[];
 }
 
 interface InfoEpisodeList {
@@ -141,7 +164,7 @@ interface InfoEpisodeList {
         title: string;
         number: number;
     }[],
-    title: string,
+    title: string
 }
 
 // =====================
@@ -168,18 +191,16 @@ interface MediaQuality {
 }
 
 interface MediaVideo {
-    result: {
-        skips: {
-            start: number;
-            end: number;
-            type: string;
-        }[];
-        sources: MediaQuality[];
-        subtitles: {
-            url: string,
-            language: string,
-        }[]
-    }
+    skips: {
+        start: number;
+        end: number;
+        type: string;
+    }[];
+    sources: MediaQuality[];
+    subtitles: {
+        url: string,
+        language: string,
+    }[]
 }
 
 // =====================

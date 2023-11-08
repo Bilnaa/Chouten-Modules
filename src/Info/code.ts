@@ -1,5 +1,5 @@
-async function logic(payload: string = "") {
-    const html = await sendRequest(payload, {});
+async function logic(payload: BasePayload) {
+    const html = await sendRequest(payload.query, {});
     const document = (new DOMParser()).parseFromString(html, "text/html");
 
     const titles = {
@@ -23,10 +23,13 @@ async function logic(payload: string = "") {
     let nextUrl = "https://aniwatch.to/ajax/v2/episode/list/" + document.getElementById("wrapper")?.getAttribute("data-id");
 
 
-    sendResult(JSON.stringify({
+    sendResult({
         result: {
             id: "",
             titles: titles,
+            epListURLs: [
+                nextUrl
+            ],
             altTitles: [],
             description: description,
             poster: poster,
@@ -34,18 +37,15 @@ async function logic(payload: string = "") {
             totalMediaCount: parseInt(totalMediaCount),
             mediaType: "Episodes",
             seasons: seasons,
-            mediaList: [],
+            mediaList: []
         },
-        nextUrl: null,
-    } as InfoData));
-
-    getEpList(nextUrl);
-
+        action: "metadata",
+    });
 }
 
 
-async function getEpList(url: string) {
-    const myJsonObject = JSON.parse(await sendRequest(url, {}));
+async function getEpList(payload: any) {
+    const myJsonObject = JSON.parse(await sendRequest(payload.query, {}));
     const document = (new DOMParser()).parseFromString(myJsonObject.html, "text/html");
 
     const allEpInfo = [...document.querySelectorAll(".ssl-item.ep-item")].map(
@@ -60,8 +60,11 @@ async function getEpList(url: string) {
         }
     );
 
-    sendResult(JSON.stringify([{ 
-        title: "Season 1", 
-        list: allEpInfo 
-    } as InfoEpisodeList]), true);
+    sendResult({
+        result: [{
+            title: "Season 1",
+            list: allEpInfo
+        }],
+        action: "eplist"
+    }, true);
 }

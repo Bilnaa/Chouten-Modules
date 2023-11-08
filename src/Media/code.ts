@@ -1,6 +1,6 @@
-async function logic(payload: string = "") {
+async function logic(payload: BasePayload) {
 
-    const response = JSON.parse(await sendRequest(payload, {}));
+    const response = JSON.parse(await sendRequest(payload.query, {}));
 
     const document = (new DOMParser()).parseFromString(response.html, "text/html");
 
@@ -50,8 +50,10 @@ async function logic(payload: string = "") {
         },
     )
 
-    sendResult(JSON.stringify(servers));
-    getSource(servers[0].list[0].url);
+    sendResult({
+        result: servers,
+        action: "server"
+    });
 }
 
 function extractAndConcatenateString(originalString: string, stops: [number, number][]) {
@@ -89,9 +91,9 @@ function getFile(url: string) {
     }
 }
 
-async function getSource(url: string) {
+async function getSource(payload: any) {
 
-    const link = JSON.parse(await sendRequest(url, {})).link;
+    const link = JSON.parse(await sendRequest(payload.query, {})).link;
     const embedId = link
         .replace("https://megacloud.tv/embed-2/e-1/", "")
         .split("?")[0];
@@ -150,7 +152,7 @@ async function getSource(url: string) {
 
         qualities = uniqueAuthors.map(item => item);
 
-        sendResult(JSON.stringify({
+        sendResult({
             result: {
                 skips:
                     myJsonObject["intro"] != null
@@ -185,8 +187,9 @@ async function getSource(url: string) {
                         );
                     }),
             },
-            nextUrl: null,
-        }), true);
+            action: "video",
+        }, true);
+        
     } else {
         const manifestUrl = myJsonObject["sources"][0].file;
         const resResult = getFile(manifestUrl)!;
@@ -215,7 +218,7 @@ async function getSource(url: string) {
 
         qualities = uniqueAuthors.map(item => item)
         
-        sendResult(JSON.stringify({
+        sendResult({
             result: {
                 skips:
                     myJsonObject["intro"] != null
@@ -248,7 +251,7 @@ async function getSource(url: string) {
                         );
                     }),
             },
-            nextUrl: null,
-        }), true);
+            action: "video",
+        }, true);
     }
 }

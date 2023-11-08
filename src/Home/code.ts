@@ -1,4 +1,4 @@
-async function logic(payload = "") {
+async function logic(payload: BasePayload) {
     const html = await sendRequest("https://aniwatch.to/home", {});
     const DOMParserInstance = new DOMParser();
     const DOM = DOMParserInstance.parseFromString(html, "text/html");
@@ -127,36 +127,36 @@ async function logic(payload = "") {
         )
     }
 
-    const response = JSON.stringify({
-        result: [
-            {
-                type: "Carousel",
-                title: "Spotlight",
-                data: spotlight_data
-            },
-            {
-                type: "list",
-                title: "Recently Released",
-                data: recents_data
-            },
-            {
-                type: "grid_2x",
-                title: "Now on Zoro",
-                data: new_data
-            },
-            {
-                type: "list",
-                title: "Top Upcoming",
-                data: upcoming_data
-            },
-            {
-                type: "grid_3x",
-                title: "Most Viewed",
-                data: top_viewed_data
-            },
-        ],
-        nextUrl: null
-    } as HomepageFinalData);
+    const result = [
+        {
+            type: "Carousel",
+            title: "Spotlight",
+            data: spotlight_data
+        },
+        {
+            type: "list",
+            title: "Recently Released",
+            data: recents_data
+        },
+        {
+            type: "grid_2x",
+            title: "Now on Zoro",
+            data: new_data
+        },
+        {
+            type: "list",
+            title: "Top Upcoming",
+            data: upcoming_data
+        },
+        {
+            type: "grid_3x",
+            title: "Most Viewed",
+            data: top_viewed_data
+        },
+    ];
     
-    sendResult(response, true);
+    sendResult({
+        action: "homepage",
+        result
+    }, true);
 }

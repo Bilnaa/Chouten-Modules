@@ -1,6 +1,6 @@
 "use strict";
-async function logic(payload = "") {
-    const response = JSON.parse(await sendRequest(payload, {}));
+async function logic(payload) {
+    const response = JSON.parse(await sendRequest(payload.query, {}));
     const document = (new DOMParser()).parseFromString(response.html, "text/html");
     const subServers = document.querySelector(".ps_-block.ps_-block-sub.servers-sub");
     const dubServers = document.querySelector(".ps_-block.ps_-block-sub.servers-dub");
@@ -34,8 +34,10 @@ async function logic(payload = "") {
         title: "Dub",
         list: dubServersList
     });
-    sendResult(JSON.stringify(servers));
-    getSource(servers[0].list[0].url);
+    sendResult({
+        result: servers,
+        action: "server"
+    });
 }
 function extractAndConcatenateString(originalString, stops) {
     let decryptedKey = '';
@@ -64,8 +66,8 @@ function getFile(url) {
         return null;
     }
 }
-async function getSource(url) {
-    const link = JSON.parse(await sendRequest(url, {})).link;
+async function getSource(payload) {
+    const link = JSON.parse(await sendRequest(payload.query, {})).link;
     const embedId = link
         .replace("https://megacloud.tv/embed-2/e-1/", "")
         .split("?")[0];
@@ -108,7 +110,7 @@ async function getSource(url) {
             return accumulator;
         }, []);
         qualities = uniqueAuthors.map(item => item);
-        sendResult(JSON.stringify({
+        sendResult({
             result: {
                 skips: myJsonObject["intro"] != null
                     ? [
@@ -140,8 +142,8 @@ async function getSource(url) {
                         elements !== "");
                 }),
             },
-            nextUrl: null,
-        }), true);
+            action: "video",
+        }, true);
     }
     else {
         const manifestUrl = myJsonObject["sources"][0].file;
@@ -166,7 +168,7 @@ async function getSource(url) {
             return accumulator;
         }, []);
         qualities = uniqueAuthors.map(item => item);
-        sendResult(JSON.stringify({
+        sendResult({
             result: {
                 skips: myJsonObject["intro"] != null
                     ? [
@@ -196,7 +198,7 @@ async function getSource(url) {
                     return (!!elements);
                 }),
             },
-            nextUrl: null,
-        }), true);
+            action: "video",
+        }, true);
     }
 }
