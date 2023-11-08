@@ -56,7 +56,9 @@ jobs:
           if [ -d "Video" ]; then
             echo "Building Videos"
             cd Video
+            shopt -s nullglob  # Enable nullglob
             build_and_copy
+            shopt -u nullglob  # Disable nullglob
             cd ..
           else
             echo "Video folder not found, skipping..."
@@ -66,7 +68,9 @@ jobs:
           if [ -d "Book" ]; then
             echo "Building Books"
             cd Book
+            shopt -s nullglob  # Enable nullglob
             build_and_copy
+            shopt -u nullglob  # Disable nullglob
             cd ..
           else
             echo "Book folder not found, skipping..."
@@ -76,7 +80,9 @@ jobs:
           if [ -d "Text" ]; then
             echo "Building Texts"
             cd Text
+            shopt -s nullglob  # Enable nullglob
             build_and_copy
+            shopt -u nullglob  # Disable nullglob
             cd ..
           else
             echo "Text folder not found, skipping..."
