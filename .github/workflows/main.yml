@@ -30,7 +30,7 @@ jobs:
     - name: Building the module
       run: |
         cd $REPO_NAME && make build-module && cd ..
-        cp ./aniwatch-chouten/aniwatch-chouten/*.module ./aniwatch-chouten/aniwatch-chouten
+        cp ./aniwatch-chouten/aniwatch-chouten/aniwatch-chouten/*.module ./aniwatch-chouten/aniwatch-chouten
         cd $REPO_NAME && ls && cd ..
         ls ./aniwatch-chouten/aniwatch-chouten
       env: 
