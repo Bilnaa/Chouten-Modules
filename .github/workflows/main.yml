@@ -38,7 +38,7 @@ jobs:
         TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     - uses: actions/checkout@v3
-      run: |
+    - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           cd built && git add . && git commit -m "test" && git push
