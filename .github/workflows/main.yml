@@ -30,65 +30,79 @@ jobs:
     - name: Building the module
       run: |
         cd $REPO_NAME
-          mkdir /home/runner/images
+        mkdir /home/runner/images
+        # Initialize an empty array for the JSON objects
+        json_array=()
 
-          # Function to build modules and copy icons
-          build_and_copy() {
-            for folder in */; do
-              # Remove trailing slash to get folder name
-              folder_name="${folder%/}"
+        # Function to build modules and copy icons
+        build_and_copy() {
+          for folder in */; do
+            # Remove trailing slash to get folder name
+            folder_name="${folder%/}"
 
-              echo "Processing subfolder: $folder_name"
+            echo "Processing subfolder: $folder_name"
 
-              # Navigate into the subfolder
-              cd "$folder_name"
+            # Navigate into the subfolder
+            cd "$folder_name"
 
-              make build-module
-              cp ./*.module /home/runner
-              cp ./src/icon.png /home/runner/images/"$folder_name".png
+            make build-module
+            cp ./*.module /home/runner
+            cp ./src/icon.png /home/runner/images/"$folder_name".png
 
-              # Navigate back to the main directory
-              cd ..
-            done
-          }
+            # Read the contents of metadata.json into a variable
+            metadata=$(cat "$folder_name/src/metadata.json")
 
-          # Check and build for Video folder
-          if [ -d "Video" ]; then
-            echo "Building Videos"
-            cd Video
-            shopt -s nullglob  # Enable nullglob
-            build_and_copy
-            shopt -u nullglob  # Disable nullglob
+            # Append the metadata to the JSON array
+            json_array+=("$metadata")
+
+            # Navigate back to the main directory
             cd ..
-          else
-            echo "Video folder not found, skipping..."
-          fi
+          done
+        }
 
-          # Check and build for Book folder
-          if [ -d "Book" ]; then
-            echo "Building Books"
-            cd Book
-            shopt -s nullglob  # Enable nullglob
-            build_and_copy
-            shopt -u nullglob  # Disable nullglob
-            cd ..
-          else
-            echo "Book folder not found, skipping..."
-          fi
-
-          # Check and build for Text folder
-          if [ -d "Text" ]; then
-            echo "Building Texts"
-            cd Text
-            shopt -s nullglob  # Enable nullglob
-            build_and_copy
-            shopt -u nullglob  # Disable nullglob
-            cd ..
-          else
-            echo "Text folder not found, skipping..."
-          fi
-
+        # Check and build for Video folder
+        if [ -d "Video" ]; then
+          echo "Building Videos"
+          cd Video
+          shopt -s nullglob  # Enable nullglob
+          build_and_copy
+          shopt -u nullglob  # Disable nullglob
           cd ..
+        else
+          echo "Video folder not found, skipping..."
+        fi
+
+        # Check and build for Book folder
+        if [ -d "Book" ]; then
+          echo "Building Books"
+          cd Book
+          shopt -s nullglob  # Enable nullglob
+          build_and_copy
+          shopt -u nullglob  # Disable nullglob
+          cd ..
+        else
+          echo "Book folder not found, skipping..."
+        fi
+
+        # Check and build for Text folder
+        if [ -d "Text" ]; then
+          echo "Building Texts"
+          cd Text
+          shopt -s nullglob  # Enable nullglob
+          build_and_copy
+          shopt -u nullglob  # Disable nullglob
+          cd ..
+        else
+          echo "Text folder not found, skipping..."
+        fi
+        cd ..
+
+        # Convert the array to a JSON string
+        json_string=$(printf '%s\n' "${json_array[@]}" | jq -s .)
+
+        # Write the JSON string to a file
+        echo "$json_string" > files.json
+        cp ./files.json /home/runner
       env:
         REPO_NAME: ${{github.event.repository.name}}
         REPO_OWNER: ${{github.repository_owner}}
@@ -110,6 +124,7 @@ jobs:
             rm -rf Text
           fi
           cp /home/runner/*.module ./
+          cp /home/runner/files.json ./
           mkdir -p images
           cp /home/runner/images/* ./images/
           ls -a
