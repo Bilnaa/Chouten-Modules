@@ -19,7 +19,7 @@ jobs:
     - name: Cloning the repo
       run: |
         pwd
-        git clone https://github.com/$REPO_OWNER/$REPO_NAME && cd $REPO_NAME && git checkout $BRANCH && cd ..
+        git clone https://github.com/$REPO_OWNER/$REPO_NAME && cd $REPO_NAME && git checkout master && cd ..
         git clone https://github.com/$REPO_OWNER/$REPO_NAME built && cd built && git checkout built && cd ..
       env: 
         BRANCH:  ${{steps.branch-name.outputs.current_branch}}
@@ -29,7 +29,14 @@ jobs:
 
     - name: Building the module
       run: |
-        cd $REPO_NAME && make build-module && cd ..
+        cd $REPO_NAME
+        for folder in Video Book Text; do
+          cd "$folder"
+          make build-module
+          cp ./*.module /home/runner
+          cp ./icon.png /home/runner/images/"$folder".png
+          cd ..
+        done
         cp ./$REPO_NAME/*.module /home/runner
       env: 
         REPO_NAME: ${{github.event.repository.name}}
@@ -42,7 +49,8 @@ jobs:
 
     - run: |
           cp /home/runner/*.module ./
+          cp /home/runner/images/* ./images/
           ls -a
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add . && git commit -m "test" && git push
+          git add . && git commit -m "updated modules" && git push
