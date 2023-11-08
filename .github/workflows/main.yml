@@ -47,7 +47,7 @@ jobs:
 
             make build-module
             cp ./*.module /home/runner
-            cp ./src/icon.png /home/runner/images/"$folder_name".png
+            cp ./src/icon.png /home/runner/images/"$(jq .name ./src/metadata.json)".png
 
             # Read the contents of metadata.json into a variable
             metadata=$(cat "./src/metadata.json")
