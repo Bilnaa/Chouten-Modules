@@ -30,11 +30,24 @@ jobs:
     - name: Building the module
       run: |
         cd $REPO_NAME
-        for folder in */Video/; do
-          cd Video/"$folder"
+
+        cd Video
+        # Loop through subfolders
+        for folder in */; do
+          # Remove trailing slash to get folder name
+          folder_name="${folder%/}"
+
+          echo "Processing subfolder: $folder_name"
+
+          # Navigate into the subfolder
+          cd "$folder_name"
+
           make build-module
           cp ./*.module /home/runner
           cp ./src/icon.png /home/runner/images/"$folder".png
+          cd ..
+
+          # Navigate back to the main directory
           cd ..
         done
         cp ./$REPO_NAME/*.module /home/runner
