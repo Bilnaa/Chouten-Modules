@@ -1,6 +1,6 @@
 async function getVRF(query: string, action: string): Promise<string> {
     const nineAnimeURL = "9anime.eltik.net";
-    let reqURL = `https://${nineAnimeURL}/${action}?query=${encodeURIComponent(query)}&apikey=${"enimax"}`;
+    const reqURL = `https://${nineAnimeURL}/${action}?query=${encodeURIComponent(query)}&apikey=${"enimax"}`;
 
     const source = await sendRequest(reqURL, {});
     try {
@@ -16,10 +16,9 @@ async function getVRF(query: string, action: string): Promise<string> {
     }
 }
 
-
 async function logic(payload: BasePayload) {
-    let infoHTML = await sendRequest(payload.query, {});
-    const infoDOM = (new DOMParser()).parseFromString(infoHTML, "text/html");
+    const infoHTML = await sendRequest(payload.query, {});
+    const infoDOM = new DOMParser().parseFromString(infoHTML, "text/html");
 
     const infoMainDOM = infoDOM.querySelector("#w-info")?.querySelector(".info")!;
 
@@ -31,15 +30,13 @@ async function logic(payload: BasePayload) {
     const description = (infoMainDOM.querySelector(".content") as HTMLElement)?.innerText ?? "";
     const poster = infoDOM.querySelector("#w-info")?.querySelector("img")?.getAttribute("src");
     const status = "";
-    let seasons = [] as any[];
+    const seasons = [] as any[];
 
     sendResult({
         result: {
             id: "",
             titles: titles,
-            epListURLs: [
-                nineAnimeID
-            ],
+            epListURLs: [nineAnimeID],
             altTitles: [],
             description: description,
             poster: poster,
@@ -47,24 +44,23 @@ async function logic(payload: BasePayload) {
             totalMediaCount: NaN,
             mediaType: "Episodes",
             seasons: seasons,
-            mediaList: []
+            mediaList: [],
         },
         action: "metadata",
     });
 }
 
-
 async function getEpList(payload: BasePayload) {
     const baseURL = "https://aniwave.to";
     const IDVRF = await getVRF(payload.query, "vrf");
     const episodesHTML = JSON.parse(await sendRequest(`${baseURL}/ajax/episode/list/${payload.query}?vrf=${encodeURIComponent(IDVRF)}`, {})).result;
-    const episodesDOM = (new DOMParser()).parseFromString(episodesHTML, "text/html");
+    const episodesDOM = new DOMParser().parseFromString(episodesHTML, "text/html");
     const episodesElem = episodesDOM.querySelectorAll("li");
-    
+
     const allEpInfo: {
-        url: string,
-        title: string,
-        number: number
+        url: string;
+        title: string;
+        number: number;
     }[] = [];
 
     for (let i = 0; i < episodesElem.length; i++) {
@@ -72,16 +68,21 @@ async function getEpList(payload: BasePayload) {
 
         allEpInfo.push({
             url: curElem?.querySelector("a")?.getAttribute("data-ids") ?? "",
-            title:  curElem.querySelector("span")?.innerText?.trim() ?? "",
-            number: parseFloat(curElem?.querySelector("a")?.getAttribute("data-num") ?? "0")
-        })
+            title: curElem.querySelector("span")?.innerText?.trim() ?? "",
+            number: parseFloat(curElem?.querySelector("a")?.getAttribute("data-num") ?? "0"),
+        });
     }
 
-    sendResult({
-        result: [{
-            title: "Season 1",
-            list: allEpInfo
-        }],
-        action: "eplist"
-    }, true);
+    sendResult(
+        {
+            result: [
+                {
+                    title: "Season 1",
+                    list: allEpInfo,
+                },
+            ],
+            action: "eplist",
+        },
+        true
+    );
 }

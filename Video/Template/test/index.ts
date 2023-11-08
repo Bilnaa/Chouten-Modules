@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { readFileSync } from "fs";
 import path from "path";
 import puppeteer from "puppeteer";

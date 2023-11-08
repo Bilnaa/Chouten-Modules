@@ -1,7 +1,7 @@
 async function logic(payload: BasePayload) {
     const baseURL = "https://aniwave.to";
     const searchHTML = await sendRequest(`${baseURL}/filter?keyword=${encodeURIComponent(payload.query)}`, {});
-    const searchDOM = (new DOMParser()).parseFromString(searchHTML, "text/html");
+    const searchDOM = new DOMParser().parseFromString(searchHTML, "text/html");
     const searchElem = searchDOM.querySelector("#list-items")!;
     const searchItems = searchElem.querySelectorAll(".item");
     const titles: SearchData = [];
@@ -19,12 +19,12 @@ async function logic(payload: BasePayload) {
             title: (currentElem.querySelector(".name") as HTMLElement)?.innerText?.trim() ?? "",
             indicatorText: "",
             currentCount: NaN,
-            totalCount: NaN
+            totalCount: NaN,
         });
     }
 
     sendResult({
         action: "search",
-        result: titles
+        result: titles,
     });
 }

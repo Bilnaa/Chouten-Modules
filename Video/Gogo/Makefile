@@ -1,10 +1,11 @@
 name = $(shell jq .name ./src/metadata.json -r)
 test:
 	echo $(src_dir)
-build: 
-	rm ./dist -rf
-	- tsc
-	cp ./src/* ./dist/ -r
+build:
+	- echo "Building $(name)..."
+	- test -d ./node_modules || npm i
+	npm run build
+	tsc
 
 build-module:
 	- make build

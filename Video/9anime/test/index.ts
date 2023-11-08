@@ -4,7 +4,6 @@ import puppeteer from "puppeteer";
 import { commonCode } from "./commonCode";
 import colors from "colors";
 
-
 function readFile(pathname: string) {
     return readFileSync(path.join(__dirname, pathname), "utf-8");
 }
@@ -15,19 +14,16 @@ function throwError(message: string) {
 }
 
 async function ini(code: string, action: string, payload: string) {
-
     let result: any;
 
     const browser = await puppeteer.launch({
         headless: false,
-        args: [
-            "--disable-web-security"
-        ]
+        args: ["--disable-web-security"],
     });
 
     const page = await browser.newPage();
 
-    page.on("console", message => {
+    page.on("console", (message) => {
         result = message.text();
         console.log(message.text());
     });
@@ -38,7 +34,7 @@ async function ini(code: string, action: string, payload: string) {
 
     const data = {
         query: payload,
-        action
+        action,
     };
 
     await page.evaluate(async (param) => {
@@ -59,21 +55,17 @@ async function ini(code: string, action: string, payload: string) {
     return result;
 }
 
-
 const usageByAction = {
-    "home": `    • ${colors.yellow("ts-node test/index.ts " + colors.grey("home"))}`,
-    "search": `    • ${colors.yellow("ts-node test/index.ts " + colors.grey("search \"Odd taxi\""))}`,
-    "info": `    • ${colors.yellow("ts-node test/index.ts " + colors.grey("info \"htts://www.example.com/info\""))}
-    • ${colors.yellow("ts-node test/index.ts " + colors.grey("info \"htts://www.example.com/list\" getEpList"))}`,
-    "watch": `    • ${colors.yellow("ts-node test/index.ts " + colors.grey("media \"htts://www.example.com/servers\""))}
-    • ${colors.yellow("ts-node test/index.ts " + colors.grey("media \"htts://www.example.com/link\" getSource"))}`
+    home: `    • ${colors.yellow("ts-node test/index.ts " + colors.grey("home"))}`,
+    search: `    • ${colors.yellow("ts-node test/index.ts " + colors.grey('search "Odd taxi"'))}`,
+    info: `    • ${colors.yellow("ts-node test/index.ts " + colors.grey('info "htts://www.example.com/info"'))}
+    • ${colors.yellow("ts-node test/index.ts " + colors.grey('info "htts://www.example.com/list" getEpList'))}`,
+    watch: `    • ${colors.yellow("ts-node test/index.ts " + colors.grey('media "htts://www.example.com/servers"'))}
+    • ${colors.yellow("ts-node test/index.ts " + colors.grey('media "htts://www.example.com/link" getSource'))}`,
 } as { [key: string]: string };
 
-const usage =
-    `\nUsage: ${colors.yellow("ts-node test/index.ts " + colors.grey("<action> <payload> <entry function>"))}
-\nExamples:\n${Object.values(usageByAction).join("\n\n")}`
-
-
+const usage = `\nUsage: ${colors.yellow("ts-node test/index.ts " + colors.grey("<action> <payload> <entry function>"))}
+\nExamples:\n${Object.values(usageByAction).join("\n\n")}`;
 
 const folderName = process.argv[2]?.toLowerCase()?.trim();
 
@@ -81,42 +73,43 @@ if (!folderName || folderName == "-h" || folderName === "--help") {
     throwError(usage);
 }
 
-
 const distFolder = {
-    "info": {
+    info: {
         name: "Info",
         entryFunctions: ["logic", "getEpList"],
-        requiresPayload: true
+        requiresPayload: true,
     },
-    "media": {
+    media: {
         name: "Media",
         entryFunctions: ["logic", "getSource"],
-        requiresPayload: true
+        requiresPayload: true,
     },
-    "search": {
+    search: {
         name: "Search",
         entryFunctions: ["logic"],
-        requiresPayload: true
+        requiresPayload: true,
     },
-    "home": {
+    home: {
         name: "Home",
         entryFunctions: ["logic"],
-        requiresPayload: false
+        requiresPayload: false,
     },
-    "all": {
+    all: {
         name: "all",
         entryFunctions: [""],
-        requiresPayload: false
-    }
+        requiresPayload: false,
+    },
 } as {
     [key: string]: {
-        name: string,
-        entryFunctions: string[],
-        requiresPayload: boolean
-    }
+        name: string;
+        entryFunctions: string[];
+        requiresPayload: boolean;
+    };
 };
 
-let code = "", payload = "", entryFunction = "logic";
+let code = "",
+    payload = "",
+    entryFunction = "logic";
 
 if (folderName in distFolder) {
     const currentAction = distFolder[folderName];
@@ -135,7 +128,6 @@ if (folderName in distFolder) {
         } else {
             throwError(`Usage:\n${usageByAction[currentAction.name.toLowerCase()]}`);
         }
-
     }
 
     if (currentAction.entryFunctions.length > 1) {
@@ -145,8 +137,7 @@ if (folderName in distFolder) {
             if (currentAction.entryFunctions.includes(entryPoint)) {
                 entryFunction = entryPoint;
             } else {
-                throwError(`Entry function ${colors.yellow(entryPoint)} not found. Try using either of these:\n${colors.yellow(currentAction.entryFunctions.map((elem) => `• ${elem}`).join("\n"))
-                    }`)
+                throwError(`Entry function ${colors.yellow(entryPoint)} not found. Try using either of these:\n${colors.yellow(currentAction.entryFunctions.map((elem) => `• ${elem}`).join("\n"))}`);
             }
         } else {
             console.log(colors.yellow("Defaulting to logic entry point"));
@@ -155,11 +146,13 @@ if (folderName in distFolder) {
 } else {
     throwError(
         `Action not found. Try using either of these actions:\n${colors.yellow(
-            Object.keys(distFolder).map((elem) => `• ${elem}`).join("\n")
-        )
-        }
+            Object.keys(distFolder)
+                .map((elem) => `• ${elem}`)
+                .join("\n")
+        )}
         ${usage}
-    `);
+    `
+    );
 }
 
 (async function () {
@@ -181,7 +174,6 @@ if (folderName in distFolder) {
         const homeCode = readFile(`../dist/Home/code.js`);
         const homeResult = JSON.parse(await ini(homeCode, "logic", ""));
 
-
         // =====================
         //        Info
         // =====================
@@ -191,7 +183,6 @@ if (folderName in distFolder) {
         const infoMeta = JSON.parse(await ini(infoCode, "logic", homeResult.result[0].data[0].url));
         const infoList = JSON.parse(await ini(infoCode, "getEpList", infoMeta.result.epListURLs[0]));
 
-
         // =====================
         //       Media
         // =====================
@@ -200,7 +191,6 @@ if (folderName in distFolder) {
 
         const mediaServer = JSON.parse(await ini(mediaCode, "logic", infoList.result[0].list[0].url));
         const mediaLink = JSON.parse(await ini(mediaCode, "getSource", mediaServer.result[0].list[0].url));
-
 
         console.log(colors.yellow("Everything seems to be working fine!"));
     } else {

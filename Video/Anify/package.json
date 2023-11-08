@@ -19,14 +19,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/enimax-anime/aniwatch-chouten.git"
+    "url": "git+https://github.com/enimax-anime/chouten-modules.git"
   },
-  "author": "",
+  "author": "Eltik",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/enimax-anime/aniwatch-chouten/issues"
+    "url": "https://github.com/enimax-anime/chouten-modules/issues"
   },
-  "homepage": "https://github.com/enimax-anime/aniwatch-chouten#readme",
+  "homepage": "https://github.com/enimax-anime/chouten-modules#readme",
   "devDependencies": {
     "@types/node": "^20.4.8",
     "@typescript-eslint/eslint-plugin": "^5.59.8",

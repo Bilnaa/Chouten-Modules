@@ -1,5 +1,5 @@
 {
-  "name": "aniwatch-chouten",
+  "name": "gogo-chouten",
   "version": "1.0.0",
   "description": "``` ├── Home │   └── code.js ├── Info │   └── code.js ├── Media │   └── code.js ├── Search │   └── code.js ├── metadata.json └── icon.png ```",
   "main": "index.js",
@@ -7,20 +7,36 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "copy-files": "copyfiles -u 1 src/**/*.json dist/ && copyfiles -u 1 src/**/*.png dist/",
+    "build": "npm run clean && npm run lint && npm run build:ts",
+    "rebuild": "npm run clean && npm run build:ts",
+    "build:ts": "tsc && npm run copy-files",
+    "clean": "rimraf dist/",
+    "prettier": "prettier --write .",
+    "eslint": "eslint --ext .ts src/** --fix",
+    "lint": "npm run prettier && npm run eslint"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/enimax-anime/aniwatch-chouten.git"
+    "url": "git+https://github.com/enimax-anime/chouten-modules.git"
   },
-  "author": "",
+  "author": "enimax-anime",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/enimax-anime/aniwatch-chouten/issues"
+    "url": "https://github.com/enimax-anime/chouten-modules/issues"
   },
-  "homepage": "https://github.com/enimax-anime/aniwatch-chouten#readme",
+  "homepage": "https://github.com/enimax-anime/chouten-modules#readme",
   "devDependencies": {
-    "@types/node": "^20.4.8"
+    "@types/node": "^20.4.8",
+    "@typescript-eslint/eslint-plugin": "^5.59.8",
+    "@typescript-eslint/parser": "^5.59.8",
+    "copyfiles": "^2.4.1",
+    "prettier": "2.8.8",
+    "rimraf": "^5.0.1",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.5.3",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
     "colors": "^1.4.0",

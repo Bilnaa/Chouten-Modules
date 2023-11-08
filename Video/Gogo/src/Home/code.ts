@@ -11,17 +11,17 @@ async function logic(payload: BasePayload) {
         return {
             url: `${baseURL}${elem?.querySelector("a")?.getAttribute("href") ?? ""}`,
             titles: {
-                primary: elem?.querySelector("a")?.getAttribute("title") ?? ""
+                primary: elem?.querySelector("a")?.getAttribute("title") ?? "",
             },
-            image: elem?.querySelector<HTMLElement>(".thumbnail-popular")?.getAttribute("style")?.split("\'")[1] ?? "",
+            image: elem?.querySelector<HTMLElement>(".thumbnail-popular")?.getAttribute("style")?.split("'")[1] ?? "",
             subtitle: "",
             subtitleValue: [],
             showIcon: false,
             buttonText: "Watch Now",
             indicator: "",
             current: isNaN(parseInt(current)) ? null : parseInt(current),
-            total: null
-        }
+            total: null,
+        };
     });
 
     const spotlight_data = [];
@@ -34,27 +34,28 @@ async function logic(payload: BasePayload) {
         for (const data of spotlight_data) {
             data!.indicator = "Spotlight";
         }
-    } catch (err) {
-
-    }
+    } catch (err) {}
 
     const result = [
         {
             type: "Carousel",
             title: "Spotlight",
-            data: spotlight_data
+            data: spotlight_data,
         },
         {
             type: "grid_2x",
             title: "Recently Released",
-            data: items
+            data: items,
         },
     ] as HomepageFinalData[];
 
     console.log(result);
 
-    sendResult({
-        action: "homepage",
-        result
-    }, true);
+    sendResult(
+        {
+            action: "homepage",
+            result,
+        },
+        true
+    );
 }
