@@ -3,7 +3,7 @@ import { Anime, Seasonal } from "../anify-types";
 export {};
 
 async function logic(payload: BasePayload) {
-    const data: Seasonal = JSON.parse(await sendRequest("https://api.anify.tv/seasonal?type=anime&apikey=a29078ed5ace232f708c0f2851530a61", {}));
+    const data: Seasonal = JSON.parse(await sendRequest("https://api.eltik.net/seasonal?type=anime&fields=[id,title,coverImage,description,season,episodes,totalEpisodes]", {}));
 
     function capitalize(s: string) {
         s = s.toLowerCase();
@@ -15,7 +15,7 @@ async function logic(payload: BasePayload) {
         const item = data.seasonal[i];
 
         seasonalData.push({
-            url: `https://api.anify.tv/info/${item.id}?apikey=a29078ed5ace232f708c0f2851530a61`,
+            url: `https://api.eltik.net/info/${item.id}`,
             titles: {
                 primary: item.title.english ?? item.title.romaji ?? item.title.native ?? "",
                 secondary: item.title.native ?? item.title.romaji ?? item.title.english ?? "",
@@ -30,7 +30,7 @@ async function logic(payload: BasePayload) {
         });
     }
 
-    const recents: Anime[] = JSON.parse(await sendRequest("https://api.anify.tv/recent?type=anime&apikey=a29078ed5ace232f708c0f2851530a61", {}));
+    const recents: Anime[] = JSON.parse(await sendRequest("https://api.eltik.net/recent?type=anime", {}));
 
     const recentData: Array<HompageData> = [];
 
@@ -38,7 +38,7 @@ async function logic(payload: BasePayload) {
         const item = recents[i];
 
         recentData.push({
-            url: `https://api.anify.tv/info/${item.id}?apikey=a29078ed5ace232f708c0f2851530a61`,
+            url: `https://api.eltik.net/info/${item.id}`,
             titles: {
                 primary: item.title.english ?? item.title.romaji ?? item.title.native ?? "",
                 secondary: item.title.native ?? item.title.romaji ?? item.title.english ?? "",
@@ -60,7 +60,7 @@ async function logic(payload: BasePayload) {
         const item = data.trending[i];
 
         trendingData.push({
-            url: `https://api.anify.tv/info/${item.id}?apikey=a29078ed5ace232f708c0f2851530a61`,
+            url: `https://api.eltik.net/info/${item.id}`,
             titles: {
                 primary: item.title.english ?? item.title.romaji ?? item.title.native ?? "",
                 secondary: item.title.native ?? item.title.romaji ?? item.title.english ?? "",
@@ -82,7 +82,7 @@ async function logic(payload: BasePayload) {
         const item = data.top[i];
 
         topRatedData.push({
-            url: `https://api.anify.tv/info/${item.id}?apikey=a29078ed5ace232f708c0f2851530a61`,
+            url: `https://api.eltik.net/info/${item.id}`,
             titles: {
                 primary: item.title.english ?? item.title.romaji ?? item.title.native ?? "",
                 secondary: item.title.native ?? item.title.romaji ?? item.title.english ?? "",
