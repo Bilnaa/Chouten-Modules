@@ -31,8 +31,7 @@ jobs:
       run: |
         cd $REPO_NAME && make build-module && cd ..
         cp ./aniwatch-chouten/*.module ./
-        cd $REPO_NAME && ls && cd ..
-        ls ./aniwatch-chouten/aniwatch-chouten
+        cd ./aniwatch-chouten/ && ls && cd ..
       env: 
         REPO_NAME: ${{github.event.repository.name}}
         REPO_OWNER: ${{github.repository_owner}}
