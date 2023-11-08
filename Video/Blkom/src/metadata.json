@@ -1,0 +1,18 @@
+{
+    "id": "28d8c6c4-335a-11ee-be56-0242ac120002",
+    "type": "Video",
+    "moduleType": "source",
+    "subtypes": ["anime"],
+    "name": "Blkom",
+    "version": "0.0.1",
+    "formatVersion": 1,
+    "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
+    "general": {
+      "author": "Moha",
+      "description": "أنمي بالكوم لست مسؤول عن ما تشاهد ",
+      "lang": ["ar-AE"],
+      "baseURL": "https://mymodule.com",
+      "bgColor":  "#202020",
+      "fgColor": "#ffffff"
+    }
+}
