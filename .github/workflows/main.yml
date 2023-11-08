@@ -30,15 +30,15 @@ jobs:
     - name: Building the module
       run: |
         cd $REPO_NAME
-        for folder in Video Book Text; do
-          cd "$folder"
+        for folder in */Video/; do
+          cd Video/"$folder"
           make build-module
           cp ./*.module /home/runner
           cp ./src/icon.png /home/runner/images/"$folder".png
           cd ..
         done
         cp ./$REPO_NAME/*.module /home/runner
-      env: 
+      env:
         REPO_NAME: ${{github.event.repository.name}}
         REPO_OWNER: ${{github.repository_owner}}
         TOKEN: ${{secrets.GITHUB_TOKEN}}
