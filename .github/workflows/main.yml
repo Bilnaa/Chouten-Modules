@@ -47,7 +47,7 @@ jobs:
 
             make build-module
             cp ./*.module /home/runner
-            cp ./src/icon.png /home/runner/images/"$(jq .name ./src/metadata.json)".png
+            cp ./src/icon.png /home/runner/images/$(jq .name ./src/metadata.json).png
 
             # Read the contents of metadata.json into a variable
             metadata=$(cat "./src/metadata.json")
@@ -126,6 +126,7 @@ jobs:
           cp /home/runner/*.module ./
           cp /home/runner/files.json ./
           mkdir -p images
+          rm ./images/* -f
           cp /home/runner/images/* ./images/
           ls -a
           git config user.name github-actions
