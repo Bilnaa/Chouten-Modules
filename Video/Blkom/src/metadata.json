@@ -1,10 +1,10 @@
 {
-    "id": "28d8c6c4-335a-11ee-be56-0242ac120002",
+    "id": "2228a54f-171e-492e-8d19-dbdf24ff5535",
     "type": "Video",
     "moduleType": "source",
     "subtypes": ["anime"],
     "name": "Blkom",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "formatVersion": 1,
     "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
     "general": {
