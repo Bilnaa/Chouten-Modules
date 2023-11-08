@@ -40,6 +40,29 @@ For fetching sources and additional logic for parsing source files, the `/src/Me
 ### Search
 Searching is all handled in the `/src/Search` directory for displaying results for a specific query. At the moment, advanced searching is not supported but likely will in the future. For now, just worry about handling searching by name or title.
 
+### Metadata
+The `metadata.json` file is for all information on what the module is about. Please note that the **name of the module cannot have spaces** and must be file friendly. For example, unicode characters won't work. The `metadata.json` file looks something like this:
+```json
+{
+  "id": "anythingcangohere",
+  "type": "Video",
+  "moduleType": "source",
+  "subtypes": ["anime"],
+  "name": "Name_of_Module",
+  "version": "0.1.0",
+  "formatVersion": 1,
+  "updateUrl": "https://raw.githubusercontent.com/Eltik/anify-module/master/module.json",
+  "general": {
+    "author": "Your Name",
+    "description": "Template module",
+    "lang": ["en-US"],
+    "baseURL": "https://someurl.com",
+    "bgColor": "#4CB875",
+    "fgColor": "#000000"
+  }
+}
+```
+
 ## Building Modules
 As of now, building modules is all handled by the `Makefile` and `npm` packages. To build your code to see if there are errors, run `npm run build`. This will delete the `/dist/` directory and use `tsc` to build the code. To build a module, run `make build-module`. This will run `npm run build` and zip the code in the `/dist/` folder into a `.module` file. **If your module does not contain a name** and you have provided it in the `/src/metadata.json` file, make sure you have `jq` installed. You can install it via the following:
 ```bash

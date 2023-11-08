@@ -3,7 +3,7 @@
   "type": "Video",
   "moduleType": "source",
   "subtypes": ["anime"],
-  "name": "Name of Module",
+  "name": "Name_of_Module",
   "version": "0.1.0",
   "formatVersion": 1,
   "updateUrl": "https://raw.githubusercontent.com/Eltik/anify-module/master/module.json",
