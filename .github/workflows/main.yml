@@ -50,7 +50,7 @@ jobs:
             cp ./src/icon.png /home/runner/images/"$folder_name".png
 
             # Read the contents of metadata.json into a variable
-            metadata=$(cat "$folder_name/src/metadata.json")
+            metadata=$(cat "./src/metadata.json")
 
             # Append the metadata to the JSON array
             json_array+=("$metadata")
