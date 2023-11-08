@@ -58,3 +58,5 @@ You can put any functions in code.js, but there are some functions that the js f
    * **Note**: The type of `result` varies. Refer to the demo code to see what type it should be of.
    * **Note** The `last` argument is used to tell that it's safe for the app to close the webview.
      
+# Building Modules
+To build modules, simply run `make build-module` in the respective folder. If you don't have `jq` installed, you can run `brew install jq` or `choco install jq` on MacOS.

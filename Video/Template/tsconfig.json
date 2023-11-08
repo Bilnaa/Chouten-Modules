@@ -1,0 +1,25 @@
+{
+  "exclude": ["./test"],
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": [
+      "es2021",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "noImplicitAny": false,
+    "isolatedModules": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "declaration": false,
+    "skipLibCheck": true
+  }
+}

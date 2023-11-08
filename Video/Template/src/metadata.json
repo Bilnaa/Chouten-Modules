@@ -1,0 +1,18 @@
+{
+  "id": "anythingcangohere",
+  "type": "Video",
+  "moduleType": "source",
+  "subtypes": ["anime"],
+  "name": "Name of Module",
+  "version": "0.1.0",
+  "formatVersion": 1,
+  "updateUrl": "https://raw.githubusercontent.com/Eltik/anify-module/master/module.json",
+  "general": {
+    "author": "Your Name",
+    "description": "Template module",
+    "lang": ["en-US"],
+    "baseURL": "https://someurl.com",
+    "bgColor": "#4CB875",
+    "fgColor": "#000000"
+  }
+}

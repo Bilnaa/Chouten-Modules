@@ -1,6 +1,7 @@
 name = $(shell jq .name ./src/metadata.json -r)
 test:
 	echo $(src_dir)
+	echo $(name)
 build:
 	npm run build
 
