@@ -50,6 +50,44 @@ jobs:
           # Navigate back to the main directory
           cd ..
         done
+
+        cd Book
+        # Loop through subfolders
+        for folder in */; do
+          # Remove trailing slash to get folder name
+          folder_name="${folder%/}"
+
+          echo "Processing subfolder: $folder_name"
+
+          # Navigate into the subfolder
+          cd "$folder_name"
+
+          make build-module
+          cp ./*.module /home/runner
+          cp ./src/icon.png /home/runner/images/"$folder_name".png
+
+          # Navigate back to the main directory
+          cd ..
+        done
+
+        cd Text
+        # Loop through subfolders
+        for folder in */; do
+          # Remove trailing slash to get folder name
+          folder_name="${folder%/}"
+
+          echo "Processing subfolder: $folder_name"
+
+          # Navigate into the subfolder
+          cd "$folder_name"
+
+          make build-module
+          cp ./*.module /home/runner
+          cp ./src/icon.png /home/runner/images/"$folder_name".png
+
+          # Navigate back to the main directory
+          cd ..
+        done
       env:
         REPO_NAME: ${{github.event.repository.name}}
         REPO_OWNER: ${{github.repository_owner}}
