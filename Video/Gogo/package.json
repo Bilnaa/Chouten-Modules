@@ -1,0 +1,29 @@
+{
+  "name": "aniwatch-chouten",
+  "version": "1.0.0",
+  "description": "``` ├── Home │   └── code.js ├── Info │   └── code.js ├── Media │   └── code.js ├── Search │   └── code.js ├── metadata.json └── icon.png ```",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enimax-anime/aniwatch-chouten.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/enimax-anime/aniwatch-chouten/issues"
+  },
+  "homepage": "https://github.com/enimax-anime/aniwatch-chouten#readme",
+  "devDependencies": {
+    "@types/node": "^20.4.8"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "puppeteer": "^21.0.1"
+  }
+}
