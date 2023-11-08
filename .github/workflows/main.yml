@@ -1,4 +1,5 @@
 name: Build Module
+
 on:
   push:
     branches: [ "*" ]
@@ -7,101 +8,90 @@ on:
       name:
         description: "World"
         default: "Hello"
+
 jobs:
   build:
     environment: build
     runs-on: ubuntu-latest
     steps:
-    - name: Get branch name
-      id: branch-name
-      uses: tj-actions/branch-names@v7
+      - name: Get branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v7
 
-    - name: Cloning the repo
-      run: |
-        pwd
-        git clone https://github.com/$REPO_OWNER/$REPO_NAME && cd $REPO_NAME && git checkout master && cd ..
-        git clone https://github.com/$REPO_OWNER/$REPO_NAME built && cd built && git checkout built && cd ..
-      env: 
-        BRANCH:  ${{steps.branch-name.outputs.current_branch}}
-        REPO_NAME: ${{github.event.repository.name}}
-        REPO_OWNER: ${{github.repository_owner}}
+      - name: Cloning the repo
+        run: |
+          pwd
+          git clone https://github.com/$REPO_OWNER/$REPO_NAME && cd $REPO_NAME && git checkout master && cd ..
+          git clone https://github.com/$REPO_OWNER/$REPO_NAME built && cd built && git checkout built && cd ..
+        env: 
+          BRANCH:  ${{steps.branch-name.outputs.current_branch}}
+          REPO_NAME: ${{github.event.repository.name}}
+          REPO_OWNER: ${{github.repository_owner}}
 
+      - name: Building the module
+        run: |
+          cd $REPO_NAME
+          mkdir /home/runner/images
 
-    - name: Building the module
-      run: |
-        cd $REPO_NAME
-        mkdir /home/runner/images
+          # Function to build modules and copy icons
+          build_and_copy() {
+            for folder in */; do
+              # Remove trailing slash to get folder name
+              folder_name="${folder%/}"
 
-        cd Video
-        # Loop through subfolders
-        for folder in */; do
-          # Remove trailing slash to get folder name
-          folder_name="${folder%/}"
+              echo "Processing subfolder: $folder_name"
 
-          echo "Processing subfolder: $folder_name"
+              # Navigate into the subfolder
+              cd "$folder_name"
 
-          # Navigate into the subfolder
-          cd "$folder_name"
+              make build-module
+              cp ./*.module /home/runner
+              cp ./src/icon.png /home/runner/images/"$folder_name".png
 
-          make build-module
-          cp ./*.module /home/runner
-          cp ./src/icon.png /home/runner/images/"$folder_name".png
+              # Navigate back to the main directory
+              cd ..
+            done
+          }
 
-          # Navigate back to the main directory
+          # Check and build for Video folder
+          if [ -d "Video" ]; then
+            cd Video
+            build_and_copy
+            cd ..
+          else
+            echo "Video folder not found, skipping..."
+          fi
+
+          # Check and build for Book folder
+          if [ -d "Book" ]; then
+            cd Book
+            build_and_copy
+            cd ..
+          else
+            echo "Book folder not found, skipping..."
+          fi
+
+          # Check and build for Text folder
+          if [ -d "Text" ]; then
+            cd Text
+            build_and_copy
+            cd ..
+          else
+            echo "Text folder not found, skipping..."
+          fi
+
           cd ..
-        done
 
-        cd ..
-
-        cd Book
-        # Loop through subfolders
-        for folder in */; do
-          # Remove trailing slash to get folder name
-          folder_name="${folder%/}"
-
-          echo "Processing subfolder: $folder_name"
-
-          # Navigate into the subfolder
-          cd "$folder_name"
-
-          make build-module
-          cp ./*.module /home/runner
-          cp ./src/icon.png /home/runner/images/"$folder_name".png
-
-          # Navigate back to the main directory
-          cd ..
-        done
-
-        cd ..
-
-        cd Text
-        # Loop through subfolders
-        for folder in */; do
-          # Remove trailing slash to get folder name
-          folder_name="${folder%/}"
-
-          echo "Processing subfolder: $folder_name"
-
-          # Navigate into the subfolder
-          cd "$folder_name"
-
-          make build-module
-          cp ./*.module /home/runner
-          cp ./src/icon.png /home/runner/images/"$folder_name".png
-
-          # Navigate back to the main directory
-          cd ..
-        done
       env:
         REPO_NAME: ${{github.event.repository.name}}
         REPO_OWNER: ${{github.repository_owner}}
         TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-    - uses: actions/checkout@v3
-      with:
-        ref: "built"
+      - uses: actions/checkout@v2
+        with:
+          ref: "built"
 
-    - run: |
+      - run: |
           cp /home/runner/*.module ./
           mkdir images
           cp /home/runner/images/* ./images/
