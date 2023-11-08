@@ -7,7 +7,7 @@ async function logic(payload: BasePayload) {
         secondary: document.querySelector<HTMLElement>(".anisc-info > .item.item-title > .name")?.innerText,
     };
 
-    const description = document.querySelector<HTMLElement>(".item.item-title.w-hide > .text")?.innerText;
+    const description = document.querySelector<HTMLElement>(".item.item-title.w-hide > .text")?.innerText?.trim() ?? "";
     const poster = document.querySelector<HTMLElement>(".film-poster-img")?.getAttribute("src");
 
     const status = Array.from(document.querySelectorAll<HTMLElement>(".item.item-title"))
