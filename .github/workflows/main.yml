@@ -19,7 +19,7 @@ jobs:
     - name: Cloning the repo
       run: |
         pwd
-        git clone https://github.com/$REPO_OWNER/$REPO_NAME && cd $REPO_NAME && git checkout master && cd ..
+        git clone https://github.com/$REPO_OWNER/$REPO_NAME && cd $REPO_NAME && git checkout main && cd ..
         git clone https://github.com/$REPO_OWNER/$REPO_NAME built && cd built && git checkout built && cd ..
       env: 
         BRANCH:  ${{steps.branch-name.outputs.current_branch}}
