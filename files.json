@@ -1,0 +1,200 @@
+[
+  {
+    "id": "ec4f774a-372b-11ee-be56-0242ac120002",
+    "type": "Video",
+    "moduleType": "source",
+    "subtypes": [
+      "anime"
+    ],
+    "name": "9anime",
+    "version": "0.0.1",
+    "formatVersion": 2,
+    "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
+    "general": {
+      "author": "Unknown",
+      "description": "A module to get the data from 9anime",
+      "lang": [
+        "en-US"
+      ],
+      "baseURL": "https://mymodule.com",
+      "bgColor": "#6b0098",
+      "fgColor": "#ffffff"
+    }
+  },
+  {
+    "id": "180c4f315e63de22205b31cfa281a3b45327859d9e4b0fd35b4a119c74637a06",
+    "type": "Video",
+    "moduleType": "source",
+    "subtypes": [
+      "anime"
+    ],
+    "name": "Anify",
+    "version": "1.0.0",
+    "formatVersion": 2,
+    "updateUrl": "https://github.com/enimax-anime/chouten-modules/raw/built/Anify.module",
+    "general": {
+      "author": "Eltik",
+      "description": "A module that uses Anify to get anime sources.",
+      "lang": [
+        "en-US"
+      ],
+      "baseURL": "https://anify.tv",
+      "bgColor": "#4CB875",
+      "fgColor": "#000000"
+    }
+  },
+  {
+    "id": "28d8c6c4-335a-11ee-be56-0242ac120002",
+    "type": "Video",
+    "moduleType": "source",
+    "subtypes": [
+      "anime"
+    ],
+    "name": "Aniwatch",
+    "version": "0.3.2",
+    "formatVersion": 2,
+    "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
+    "general": {
+      "author": "Unknown",
+      "description": "A module to get the data from aniwatch.to",
+      "lang": [
+        "en-US"
+      ],
+      "baseURL": "https://mymodule.com",
+      "bgColor": "#ffcb3d",
+      "fgColor": "#000000"
+    }
+  },
+  {
+    "id": "2228a54f-171e-492e-8d19-dbdf24ff5535",
+    "type": "Video",
+    "moduleType": "source",
+    "subtypes": [
+      "anime"
+    ],
+    "name": "Blkom",
+    "version": "0.0.2",
+    "formatVersion": 2,
+    "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
+    "general": {
+      "author": "Moha",
+      "description": "أنمي بالكوم لست مسؤول عن ما تشاهد ",
+      "lang": [
+        "ar-AE"
+      ],
+      "baseURL": "https://mymodule.com",
+      "bgColor": "#202020",
+      "fgColor": "#ffffff"
+    }
+  },
+  {
+    "id": "77cb7ccc-335a-11ee-be56-0242ac120002",
+    "type": "Video",
+    "moduleType": "source",
+    "subtypes": [
+      "anime"
+    ],
+    "name": "Gogoanime",
+    "version": "0.0.1",
+    "formatVersion": 2,
+    "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
+    "general": {
+      "author": "Unknown",
+      "description": "A module to get the data from gogoanime",
+      "lang": [
+        "en-US"
+      ],
+      "baseURL": "https://mymodule.com",
+      "bgColor": "#2e2e2e",
+      "fgColor": "#ffffff"
+    }
+  },
+  {
+    "id": "51327340-342c-11ee-be56-0242ac120002",
+    "type": "Video",
+    "moduleType": "source",
+    "subtypes": [
+      "anime"
+    ],
+    "name": "Hanime",
+    "version": "0.0.1",
+    "formatVersion": 2,
+    "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
+    "general": {
+      "author": "Femalemonkeyman",
+      "description": "A module to get the data from hanime",
+      "lang": [
+        "en-US"
+      ],
+      "baseURL": "https://mymodule.com",
+      "bgColor": "#000000",
+      "fgColor": "#ffffff"
+    }
+  },
+  {
+    "id": "d74e616c-eb95-459a-b282-e5cf6c4335fa",
+    "type": "Video",
+    "moduleType": "source",
+    "subtypes": [
+      "anime"
+    ],
+    "name": "Template-Anime",
+    "version": "0.1.0",
+    "formatVersion": 2,
+    "updateUrl": "https://raw.githubusercontent.com/Eltik/anify-module/master/module.json",
+    "general": {
+      "author": "Your Name",
+      "description": "Template module",
+      "lang": [
+        "en-US"
+      ],
+      "baseURL": "https://someurl.com",
+      "bgColor": "#4CB875",
+      "fgColor": "#000000"
+    }
+  },
+  {
+    "id": "befd2b7c-5df7-421d-b524-7f42547e5806",
+    "type": "Book",
+    "moduleType": "source",
+    "subtypes": [
+      "manga"
+    ],
+    "name": "Anify-Manga",
+    "version": "1.0.0",
+    "formatVersion": 2,
+    "updateUrl": "https://github.com/enimax-anime/chouten-modules/raw/built/Anify-Manga.module",
+    "general": {
+      "author": "Eltik",
+      "description": "A module to get the manga data from Anify.",
+      "lang": [
+        "en-US"
+      ],
+      "baseURL": "https://anify.tv",
+      "bgColor": "#4CB875",
+      "fgColor": "#000000"
+    }
+  },
+  {
+    "id": "befd2b7c-5df7-421d-b524-7f42547e5806",
+    "type": "Book",
+    "moduleType": "source",
+    "subtypes": [
+      "manga"
+    ],
+    "name": "Template-Manga",
+    "version": "0.1.0",
+    "formatVersion": 1,
+    "updateUrl": "https://raw.githubusercontent.com/Eltik/anify-module/master/module.json",
+    "general": {
+      "author": "Your Name",
+      "description": "Template module",
+      "lang": [
+        "en-US"
+      ],
+      "baseURL": "https://someurl.com",
+      "bgColor": "#4CB875",
+      "fgColor": "#000000"
+    }
+  }
+]
