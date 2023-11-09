@@ -8,7 +8,7 @@
     "formatVersion": 2,
     "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
     "general": {
-      "author": "Enimax",
+      "author": "Unknown",
       "description": "A module to get the data from gogoanime",
       "lang": ["en-US"],
       "baseURL": "https://mymodule.com",
