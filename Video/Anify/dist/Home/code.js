@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 async function logic(payload) {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16;
-    const data = JSON.parse(await sendRequest("https://api.anify.tv/seasonal?type=anime&fields=[id,title,coverImage,description,season,episodes,totalEpisodes]", {}));
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10;
+    const data = JSON.parse(await sendRequest("https://api.anify.tv/seasonal?type=anime&fields=[id,title,coverImage,description,season,currentEpisode,totalEpisodes]", {}));
     function capitalize(s) {
         var _a, _b;
         s = s.toLowerCase();
@@ -12,7 +12,7 @@ async function logic(payload) {
     for (let i = 0; i < data.seasonal.length; i++) {
         const item = data.seasonal[i];
         seasonalData.push({
-            url: `https://api.anify.tv/info/${item.id}`,
+            url: `https://api.anify.tv/info/${item.id}?fields=[id,title,description,coverImage,status,totalEpisodes,synonyms,bannerImage]`,
             titles: {
                 primary: (_c = (_b = (_a = item.title.english) !== null && _a !== void 0 ? _a : item.title.romaji) !== null && _b !== void 0 ? _b : item.title.native) !== null && _c !== void 0 ? _c : "",
                 secondary: (_f = (_e = (_d = item.title.native) !== null && _d !== void 0 ? _d : item.title.romaji) !== null && _e !== void 0 ? _e : item.title.english) !== null && _f !== void 0 ? _f : "",
@@ -26,12 +26,12 @@ async function logic(payload) {
             indicator: "Seasonal",
         });
     }
-    const recents = JSON.parse(await sendRequest("https://api.anify.tv/recent?type=anime", {}));
+    const recents = JSON.parse(await sendRequest("https://api.anify.tv/recent?type=anime&fields=[id,title,coverImage,description,season,currentEpisode,totalEpisodes]", {}));
     const recentData = [];
     for (let i = 0; i < (recents === null || recents === void 0 ? void 0 : recents.length); i++) {
         const item = recents[i];
         recentData.push({
-            url: `https://api.anify.tv/info/${item.id}`,
+            url: `https://api.anify.tv/info/${item.id}?fields=[id,title,description,coverImage,status,totalEpisodes,synonyms,bannerImage]`,
             titles: {
                 primary: (_m = (_l = (_k = item.title.english) !== null && _k !== void 0 ? _k : item.title.romaji) !== null && _l !== void 0 ? _l : item.title.native) !== null && _m !== void 0 ? _m : "",
                 secondary: (_q = (_p = (_o = item.title.native) !== null && _o !== void 0 ? _o : item.title.romaji) !== null && _p !== void 0 ? _p : item.title.english) !== null && _q !== void 0 ? _q : "",
@@ -42,18 +42,18 @@ async function logic(payload) {
             showIcon: false,
             buttonText: "",
             indicator: item.season,
-            current: Number((_t = (_s = (_r = item.episodes) === null || _r === void 0 ? void 0 : _r.latest) === null || _s === void 0 ? void 0 : _s.latestEpisode) !== null && _t !== void 0 ? _t : 0),
-            total: Number((_u = item.totalEpisodes) !== null && _u !== void 0 ? _u : 0),
+            current: Number((_r = item.currentEpisode) !== null && _r !== void 0 ? _r : 0),
+            total: Number((_s = item.totalEpisodes) !== null && _s !== void 0 ? _s : 0),
         });
     }
     const trendingData = [];
-    for (let i = 0; i < ((_v = data.trending) === null || _v === void 0 ? void 0 : _v.length); i++) {
+    for (let i = 0; i < ((_t = data.trending) === null || _t === void 0 ? void 0 : _t.length); i++) {
         const item = data.trending[i];
         trendingData.push({
-            url: `https://api.anify.tv/info/${item.id}`,
+            url: `https://api.anify.tv/info/${item.id}?fields=[id,title,description,coverImage,status,totalEpisodes,synonyms,bannerImage]`,
             titles: {
-                primary: (_y = (_x = (_w = item.title.english) !== null && _w !== void 0 ? _w : item.title.romaji) !== null && _x !== void 0 ? _x : item.title.native) !== null && _y !== void 0 ? _y : "",
-                secondary: (_1 = (_0 = (_z = item.title.native) !== null && _z !== void 0 ? _z : item.title.romaji) !== null && _0 !== void 0 ? _0 : item.title.english) !== null && _1 !== void 0 ? _1 : "",
+                primary: (_w = (_v = (_u = item.title.english) !== null && _u !== void 0 ? _u : item.title.romaji) !== null && _v !== void 0 ? _v : item.title.native) !== null && _w !== void 0 ? _w : "",
+                secondary: (_z = (_y = (_x = item.title.native) !== null && _x !== void 0 ? _x : item.title.romaji) !== null && _y !== void 0 ? _y : item.title.english) !== null && _z !== void 0 ? _z : "",
             },
             image: item.coverImage,
             subtitle: "",
@@ -61,18 +61,18 @@ async function logic(payload) {
             showIcon: false,
             buttonText: "",
             indicator: item.season,
-            current: Number((_4 = (_3 = (_2 = item.episodes) === null || _2 === void 0 ? void 0 : _2.latest) === null || _3 === void 0 ? void 0 : _3.latestEpisode) !== null && _4 !== void 0 ? _4 : 0),
-            total: Number((_5 = item.totalEpisodes) !== null && _5 !== void 0 ? _5 : 0),
+            current: Number((_0 = item.currentEpisode) !== null && _0 !== void 0 ? _0 : 0),
+            total: Number((_1 = item.totalEpisodes) !== null && _1 !== void 0 ? _1 : 0),
         });
     }
     const topRatedData = [];
-    for (let i = 0; i < ((_6 = data.top) === null || _6 === void 0 ? void 0 : _6.length); i++) {
+    for (let i = 0; i < ((_2 = data.top) === null || _2 === void 0 ? void 0 : _2.length); i++) {
         const item = data.top[i];
         topRatedData.push({
-            url: `https://api.anify.tv/info/${item.id}`,
+            url: `https://api.anify.tv/info/${item.id}?fields=[id,title,description,coverImage,status,totalEpisodes,synonyms,bannerImage]`,
             titles: {
-                primary: (_9 = (_8 = (_7 = item.title.english) !== null && _7 !== void 0 ? _7 : item.title.romaji) !== null && _8 !== void 0 ? _8 : item.title.native) !== null && _9 !== void 0 ? _9 : "",
-                secondary: (_12 = (_11 = (_10 = item.title.native) !== null && _10 !== void 0 ? _10 : item.title.romaji) !== null && _11 !== void 0 ? _11 : item.title.english) !== null && _12 !== void 0 ? _12 : "",
+                primary: (_5 = (_4 = (_3 = item.title.english) !== null && _3 !== void 0 ? _3 : item.title.romaji) !== null && _4 !== void 0 ? _4 : item.title.native) !== null && _5 !== void 0 ? _5 : "",
+                secondary: (_8 = (_7 = (_6 = item.title.native) !== null && _6 !== void 0 ? _6 : item.title.romaji) !== null && _7 !== void 0 ? _7 : item.title.english) !== null && _8 !== void 0 ? _8 : "",
             },
             image: item.coverImage,
             subtitle: "",
@@ -80,8 +80,8 @@ async function logic(payload) {
             showIcon: false,
             buttonText: "",
             indicator: item.season,
-            current: Number((_15 = (_14 = (_13 = item.episodes) === null || _13 === void 0 ? void 0 : _13.latest) === null || _14 === void 0 ? void 0 : _14.latestEpisode) !== null && _15 !== void 0 ? _15 : 0),
-            total: Number((_16 = item.totalEpisodes) !== null && _16 !== void 0 ? _16 : 0),
+            current: Number((_9 = item.currentEpisode) !== null && _9 !== void 0 ? _9 : 0),
+            total: Number((_10 = item.totalEpisodes) !== null && _10 !== void 0 ? _10 : 0),
         });
     }
     const result = [

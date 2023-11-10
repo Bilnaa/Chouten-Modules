@@ -3,7 +3,7 @@ import { Anime, Seasonal } from "../anify-types";
 export {};
 
 async function logic(payload: BasePayload) {
-    const data: Seasonal = JSON.parse(await sendRequest("https://api.anify.tv/seasonal?type=anime&fields=[id,title,coverImage,description,season,episodes,totalEpisodes]", {}));
+    const data: Seasonal = JSON.parse(await sendRequest("https://api.anify.tv/seasonal?type=anime&fields=[id,title,coverImage,description,season,currentEpisode,totalEpisodes]", {}));
 
     function capitalize(s: string) {
         s = s.toLowerCase();
@@ -15,7 +15,7 @@ async function logic(payload: BasePayload) {
         const item = data.seasonal[i];
 
         seasonalData.push({
-            url: `https://api.anify.tv/info/${item.id}`,
+            url: `https://api.anify.tv/info/${item.id}?fields=[id,title,description,coverImage,status,totalEpisodes,synonyms,bannerImage]`,
             titles: {
                 primary: item.title.english ?? item.title.romaji ?? item.title.native ?? "",
                 secondary: item.title.native ?? item.title.romaji ?? item.title.english ?? "",
@@ -30,7 +30,7 @@ async function logic(payload: BasePayload) {
         });
     }
 
-    const recents: Anime[] = JSON.parse(await sendRequest("https://api.anify.tv/recent?type=anime", {}));
+    const recents: Anime[] = JSON.parse(await sendRequest("https://api.anify.tv/recent?type=anime&fields=[id,title,coverImage,description,season,currentEpisode,totalEpisodes]", {}));
 
     const recentData: Array<HompageData> = [];
 
@@ -38,7 +38,7 @@ async function logic(payload: BasePayload) {
         const item = recents[i];
 
         recentData.push({
-            url: `https://api.anify.tv/info/${item.id}`,
+            url: `https://api.anify.tv/info/${item.id}?fields=[id,title,description,coverImage,status,totalEpisodes,synonyms,bannerImage]`,
             titles: {
                 primary: item.title.english ?? item.title.romaji ?? item.title.native ?? "",
                 secondary: item.title.native ?? item.title.romaji ?? item.title.english ?? "",
@@ -49,7 +49,7 @@ async function logic(payload: BasePayload) {
             showIcon: false,
             buttonText: "",
             indicator: item.season,
-            current: Number(item.episodes?.latest?.latestEpisode ?? 0),
+            current: Number(item.currentEpisode ?? 0),
             total: Number(item.totalEpisodes ?? 0),
         });
     }
@@ -60,7 +60,7 @@ async function logic(payload: BasePayload) {
         const item = data.trending[i];
 
         trendingData.push({
-            url: `https://api.anify.tv/info/${item.id}`,
+            url: `https://api.anify.tv/info/${item.id}?fields=[id,title,description,coverImage,status,totalEpisodes,synonyms,bannerImage]`,
             titles: {
                 primary: item.title.english ?? item.title.romaji ?? item.title.native ?? "",
                 secondary: item.title.native ?? item.title.romaji ?? item.title.english ?? "",
@@ -71,7 +71,7 @@ async function logic(payload: BasePayload) {
             showIcon: false,
             buttonText: "",
             indicator: item.season,
-            current: Number(item.episodes?.latest?.latestEpisode ?? 0),
+            current: Number(item.currentEpisode ?? 0),
             total: Number(item.totalEpisodes ?? 0),
         });
     }
@@ -82,7 +82,7 @@ async function logic(payload: BasePayload) {
         const item = data.top[i];
 
         topRatedData.push({
-            url: `https://api.anify.tv/info/${item.id}`,
+            url: `https://api.anify.tv/info/${item.id}?fields=[id,title,description,coverImage,status,totalEpisodes,synonyms,bannerImage]`,
             titles: {
                 primary: item.title.english ?? item.title.romaji ?? item.title.native ?? "",
                 secondary: item.title.native ?? item.title.romaji ?? item.title.english ?? "",
@@ -93,7 +93,7 @@ async function logic(payload: BasePayload) {
             showIcon: false,
             buttonText: "",
             indicator: item.season,
-            current: Number(item.episodes?.latest?.latestEpisode ?? 0),
+            current: Number(item.currentEpisode ?? 0),
             total: Number(item.totalEpisodes ?? 0),
         });
     }
