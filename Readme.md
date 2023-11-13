@@ -1,3 +1,7 @@
+# Note
+
+This repository is a platform for user-generated content, and I do not host or control the specific files shared here. If you believe there is a copyright infringement, please direct your notice to the actual host or provider of the content. Thank you for your understanding.
+
 # Structure of the module
 ```
 ├── Home
