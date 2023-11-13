@@ -6,7 +6,7 @@
   "name": "Template-Manga",
   "version": "0.1.0",
   "formatVersion": 1,
-  "updateUrl": "https://raw.githubusercontent.com/Eltik/anify-module/master/module.json",
+  "updateUrl": "https://github.com/Bilnaa/Chouten-Modules/raw/built/Template-Manga.module",
   "general": {
     "author": "Your Name",
     "description": "Template module",

@@ -6,7 +6,7 @@
     "name": "Hanime",
     "version": "0.0.1",
     "formatVersion": 2,
-    "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
+    "updateUrl": "https://github.com/Bilnaa/Chouten-Modules/raw/built/Hanime.module",
     "general": {
       "author": "Femalemonkeyman",
       "description": "A module to get the data from hanime",

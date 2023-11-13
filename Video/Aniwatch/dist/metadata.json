@@ -6,7 +6,7 @@
     "name": "Aniwatch",
     "version": "0.3.2",
     "formatVersion": 1,
-    "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
+    "updateUrl": "https://github.com/Bilnaa/Chouten-Modules/raw/built/Aniwatch.module",
     "general": {
       "author": "Enimax",
       "description": "A module to get the data from aniwatch.to",

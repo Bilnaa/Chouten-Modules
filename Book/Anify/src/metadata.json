@@ -6,7 +6,7 @@
   "name": "Anify-Manga",
   "version": "1.0.0",
   "formatVersion": 2,
-  "updateUrl": "https://github.com/enimax-anime/chouten-modules/raw/built/Anify-Manga.module",
+  "updateUrl": "https://github.com/Bilnaa/Chouten-Modules/raw/built/Anify-Manga.module",
   "general": {
     "author": "Eltik",
     "description": "A module to get the manga data from Anify.",

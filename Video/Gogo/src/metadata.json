@@ -6,7 +6,7 @@
     "name": "Gogoanime",
     "version": "0.0.1",
     "formatVersion": 2,
-    "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
+    "updateUrl": "https://github.com/Bilnaa/Chouten-Modules/raw/built/Gogoanime.module",
     "general": {
       "author": "Unknown",
       "description": "A module to get the data from gogoanime",
