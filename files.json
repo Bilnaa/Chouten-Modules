@@ -31,7 +31,7 @@
     "name": "Anify",
     "version": "1.0.1",
     "formatVersion": 2,
-    "updateUrl": "https://github.com/enimax-anime/chouten-modules/raw/built/Anify.module",
+    "updateUrl": "https://github.com/Bilnaa/Chouten-Modules/raw/built/Anify.module",
     "general": {
       "author": "Eltik",
       "description": "A module that uses Anify to get anime sources.",
@@ -75,7 +75,7 @@
     "name": "Blkom",
     "version": "0.0.2",
     "formatVersion": 2,
-    "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
+    "updateUrl": "https://github.com/Bilnaa/Chouten-Modules/raw/built/Blkom.module",
     "general": {
       "author": "Moha",
       "description": "أنمي بالكوم لست مسؤول عن ما تشاهد ",
@@ -97,7 +97,7 @@
     "name": "Gogoanime",
     "version": "0.0.1",
     "formatVersion": 2,
-    "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
+    "updateUrl": "https://github.com/Bilnaa/Chouten-Modules/raw/built/Gogoanime.module",
     "general": {
       "author": "Unknown",
       "description": "A module to get the data from gogoanime",
@@ -119,7 +119,7 @@
     "name": "Hanime",
     "version": "0.0.1",
     "formatVersion": 2,
-    "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
+    "updateUrl": "https://github.com/Bilnaa/Chouten-Modules/raw/built/Hanime.module",
     "general": {
       "author": "Femalemonkeyman",
       "description": "A module to get the data from hanime",
@@ -141,7 +141,7 @@
     "name": "Template-Anime",
     "version": "0.1.0",
     "formatVersion": 2,
-    "updateUrl": "https://raw.githubusercontent.com/Eltik/anify-module/master/module.json",
+    "updateUrl": "https://github.com/Bilnaa/Chouten-Modules/raw/built/Template-Anime.module",
     "general": {
       "author": "Your Name",
       "description": "Template module",
@@ -163,7 +163,7 @@
     "name": "Anify-Manga",
     "version": "1.0.0",
     "formatVersion": 2,
-    "updateUrl": "https://github.com/enimax-anime/chouten-modules/raw/built/Anify-Manga.module",
+    "updateUrl": "https://github.com/Bilnaa/Chouten-Modules/raw/built/Anify-Manga.module",
     "general": {
       "author": "Eltik",
       "description": "A module to get the manga data from Anify.",
@@ -185,7 +185,7 @@
     "name": "Template-Manga",
     "version": "0.1.0",
     "formatVersion": 1,
-    "updateUrl": "https://raw.githubusercontent.com/Eltik/anify-module/master/module.json",
+    "updateUrl": "https://github.com/Bilnaa/Chouten-Modules/raw/built/Template-Manga.module",
     "general": {
       "author": "Your Name",
       "description": "Template module",
