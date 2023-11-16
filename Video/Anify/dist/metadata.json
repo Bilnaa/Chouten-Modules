@@ -4,9 +4,9 @@
   "moduleType": "source",
   "subtypes": ["anime"],
   "name": "Anify",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "formatVersion": 2,
-  "updateUrl": "https://github.com/enimax-anime/chouten-modules/raw/built/Anify.module",
+  "updateUrl": "https://github.com/Bilnaa/Chouten-Modules/raw/built/Anify.module",
   "general": {
     "author": "Eltik",
     "description": "A module that uses Anify to get anime sources.",

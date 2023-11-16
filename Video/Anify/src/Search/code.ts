@@ -3,11 +3,15 @@ import { Anime } from "../anify-types";
 export {};
 
 async function logic(payload: BasePayload) {
-    const data: Anime[] = JSON.parse(await sendRequest(`https://api.anify.tv/search?query=${encodeURIComponent(payload.query)}&type=anime`, {}));
+    const data: {
+        results: Anime[];
+        total: number;
+        lastPage: number;
+    } = JSON.parse(await sendRequest(`https://api.anify.tv/search?query=${encodeURIComponent(payload.query)}&type=anime`, {}));
 
     const titles: SearchData = [];
 
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.results.length; i++) {
         const hasSub = true;
         const hasDub = true;
         const currentCount = data[i].episodes?.latest?.latestEpisode ?? 0;
