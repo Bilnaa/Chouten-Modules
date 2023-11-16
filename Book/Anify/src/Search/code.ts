@@ -4,9 +4,9 @@ export {};
 
 async function logic(payload: BasePayload) {
     const data: {
-        results: Manga[],
-        total: number,
-        lastPage: number
+        results: Manga[];
+        total: number;
+        lastPage: number;
     } = JSON.parse(await sendRequest(`https://api.anify.tv/search?query=${encodeURIComponent(payload.query)}&type=manga`, {}));
 
     const titles: SearchData = [];

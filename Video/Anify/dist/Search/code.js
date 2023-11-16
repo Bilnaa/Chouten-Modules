@@ -4,7 +4,7 @@ async function logic(payload) {
     var _a, _b, _c, _d, _e, _f, _g, _h;
     const data = JSON.parse(await sendRequest(`https://api.anify.tv/search?query=${encodeURIComponent(payload.query)}&type=anime`, {}));
     const titles = [];
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.results.length; i++) {
         const hasSub = true;
         const hasDub = true;
         const currentCount = (_c = (_b = (_a = data[i].episodes) === null || _a === void 0 ? void 0 : _a.latest) === null || _b === void 0 ? void 0 : _b.latestEpisode) !== null && _c !== void 0 ? _c : 0;
