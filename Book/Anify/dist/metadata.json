@@ -4,7 +4,7 @@
   "moduleType": "source",
   "subtypes": ["manga"],
   "name": "Anify-Manga",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "formatVersion": 2,
   "updateUrl": "https://github.com/Bilnaa/Chouten-Modules/raw/built/Anify-Manga.module",
   "general": {
