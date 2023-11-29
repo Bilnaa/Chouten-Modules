@@ -20,9 +20,9 @@ async function logic(payload: BasePayload) {
         const totalCount = data.results[i].totalEpisodes ?? 0;
 
         titles.push({
-            url: `https://api.anify.tv/info/${data[i].id}`,
-            img: data[i].coverImage ?? "",
-            title: data[i].title.english ?? data[i].title.romaji ?? data[i].title.native ?? "No Title Found",
+            url: `https://api.anify.tv/info/${data.results[i].id}`,
+            img: data.results[i].coverImage ?? "",
+            title: data.results[i].title.english ?? data.results[i].title.romaji ?? data.results[i].title.native ?? "No Title Found",
             indicatorText: `${hasSub ? "Sub" : ""}${hasSub && hasDub ? "|" : ""}${hasDub ? "Dub" : ""}`,
             currentCount,
             totalCount,
