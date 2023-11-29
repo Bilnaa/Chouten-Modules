@@ -12,8 +12,8 @@ async function logic(payload: BasePayload) {
     const titles: SearchData = [];
 
     for (let i = 0; i < data.results.length; i++) {
-        const currentCount = data[i].chapters?.latest?.latestChapter ?? 0;
-        const totalCount = data[i].totalChapters ?? 0;
+        const currentCount = data.results[i].chapters?.latest?.latestChapter ?? 0;
+        const totalCount = data.results[i].totalChapters ?? 0;
 
         titles.push({
             url: `https://api.anify.tv/info/${data[i].id}`,
