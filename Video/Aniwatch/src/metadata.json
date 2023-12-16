@@ -4,7 +4,7 @@
     "moduleType": "source",
     "subtypes": ["anime"],
     "name": "Aniwatch",
-    "version": "0.3.2",
+    "version": "0.4.1",
     "formatVersion": 2,
     "updateUrl": "https://raw.githubusercontent.com/adolar0042/MyModule/main/module.json",
     "general": {
