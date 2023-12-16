@@ -94,7 +94,7 @@ async function getSource(payload: any) {
 
     if (myJsonObject["encrypted"] == true) {
         const base64 = myJsonObject["sources"];
-        const enc_key = getFile("https://raw.githubusercontent.com/enimax-anime/key/e6/key.txt")!;
+        const enc_key = getFile("https://zoro.anify.tv/key/6")!;
         let keyArray = [];
 
         try {
